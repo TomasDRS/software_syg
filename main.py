@@ -16,7 +16,7 @@ class UI(QMainWindow):
         uic.loadUi(r"gui\gui.ui", self)  # Cargar la interfaz de Qt Designer
         
         self.user = user
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
         self.ventana_agregar_evento = ADD_EVENT(user)
         # self.ventana_agregar_empresa = ADD_COMPANY()
 
@@ -25,6 +25,9 @@ class UI(QMainWindow):
         self.msg_login.setText("Se ha iniciado sesión como " + user + ".")
         self.msg_login.setWindowTitle("Sesion iniciada.")
         self.msg_login.exec_()
+
+        # VERSION DEL PROGRAMA
+        self.action_version.setText("Versión 1.0.6 BUILD PRUEBA")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
@@ -68,7 +71,6 @@ class UI(QMainWindow):
 
         self.desbloquear_tabs()
         # self.action_agregar_empresa.triggered.connect(self.ventana_agregar_empresa.show)
-
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.refrescar_tabla)
         self.timer.start(60000)  # refresca las tablas cada 15 segundos
@@ -156,21 +158,20 @@ class UI(QMainWindow):
 
     def refrescar_tabla(self):
         sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(self.user)[4])
-        tablas_por_sectores = {
-            'syg_comex': ["events_syg_comex", self.tabla_eventos_syg_comex], 
-            'syg_gestion': ["events_syg_gestion", self.tabla_eventos_syg_gestion], 
-            'syg_ingenieria': ["events_syg_ingenieria", self.tabla_eventos_syg_ingenieria], 
-            'syg_laboratorio': ["events_syg_laboratorio", self.tabla_eventos_syg_laboratorio],
-            'syg_visitas_ingenieria': ["visitas_syg_ingenieria", self.tabla_visitas_syg_ingenieria],
-            'syg_producto': ["events_syg_producto", self.tabla_eventos_syg_producto], 
-            'mgm_academia': ["events_mgm_academia", self.tabla_eventos_mgm_academia], 
-            'mgm_calidad': ["events_mgm_calidad", self.tabla_eventos_mgm_calidad], 
-            'mgm_comercial': ["events_mgm_comercial", self.tabla_eventos_mgm_comercial], 
-            'mgm_gestion': ["events_mgm_gestion", self.tabla_eventos_mgm_gestion], 
-            'mgm_ingenieria': ["events_mgm_ingenieria", self.tabla_eventos_mgm_ingenieria],
-            'mgm_laboratorio': ["events_mgm_laboratorio", self.tabla_eventos_mgm_laboratorio], 
-            'mgm_producto': ["events_mgm_producto", self.tabla_eventos_mgm_producto]
-        }
+        tablas_por_sectores = {'syg_comex': ["events_syg_comex", self.tabla_eventos_syg_comex], 
+                            'syg_gestion': ["events_syg_gestion", self.tabla_eventos_syg_gestion], 
+                            'syg_ingenieria': ["events_syg_ingenieria", self.tabla_eventos_syg_ingenieria], 
+                            'syg_laboratorio': ["events_syg_laboratorio", self.tabla_eventos_syg_laboratorio],
+                            'syg_visitas_ingenieria': ["visitas_syg_ingenieria", self.tabla_visitas_syg_ingenieria],
+                            'syg_producto': ["events_syg_producto", self.tabla_eventos_syg_producto], 
+                            'mgm_academia': ["events_mgm_academia", self.tabla_eventos_mgm_academia], 
+                            'mgm_calidad': ["events_mgm_calidad", self.tabla_eventos_mgm_calidad], 
+                            'mgm_comercial': ["events_mgm_comercial", self.tabla_eventos_mgm_comercial], 
+                            'mgm_gestion': ["events_mgm_gestion", self.tabla_eventos_mgm_gestion], 
+                            'mgm_ingenieria': ["events_mgm_ingenieria", self.tabla_eventos_mgm_ingenieria],
+                            'mgm_laboratorio': ["events_mgm_laboratorio", self.tabla_eventos_mgm_laboratorio], 
+                            'mgm_producto': ["events_mgm_producto", self.tabla_eventos_mgm_producto]}
+        
         for sector in sectores:
             data = tablas_por_sectores[sector]
             tabla_widget = data[1]
@@ -190,8 +191,8 @@ class UI(QMainWindow):
         self.eventos = self.claseSQLite.leer_eventos(tabla_db)
         # self.eventos.sort(key=lambda x: (x[7], x[10]))
         tabla_widget.clear()
-        column_width = [100, 100, 500, 250, 100, 75]
-        headers = ["Fecha Carga", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Finalizado"]
+        column_width = [100, 100, 500, 250, 100, 75, 75]
+        headers = ["Fecha Carga", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
         for i, header in enumerate(headers):
             tabla_widget.setColumnWidth(i, column_width[i])
 
@@ -199,12 +200,19 @@ class UI(QMainWindow):
         tabla_widget.horizontalHeader().setVisible(True)
         tabla_widget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         tabla_widget.setRowCount(len(self.eventos))
-        tabla_widget.setColumnCount(6)
+        tabla_widget.setColumnCount(7)
 
         tableindex = 0
 
         for tableindex, row in enumerate(self.eventos):
-            for colindex, value in enumerate([row[4], row[1], row[2], row[10], row[9], row[11]]):
+            lista_finalizado = ast.literal_eval(row[11]) # ejemplo lista_finalizado = [["1", "2025/03/11", "Juan Doe"], ["0", "2025/03/11", "Juan Doe"]]
+            finalizado_interno_num = lista_finalizado[0][0]
+            finalizado_num = lista_finalizado[1][0]
+
+            finalizado_interno = finalizado_interno_num + "\n" + lista_finalizado[0][1] + "\n" + lista_finalizado[0][2]
+            finalizado = finalizado_num + "\n" + lista_finalizado[1][1] + "\n" + lista_finalizado[1][2]
+
+            for colindex, value in enumerate([row[4], row[1], row[2], row[10], row[9], finalizado_interno, finalizado]):
                 try:
                     tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
                     tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
@@ -215,11 +223,12 @@ class UI(QMainWindow):
         
             colors = {"0": QColor(255, 0, 0, 100),
                     "1": QColor(0, 255, 0, 100),}
-            if row[11] in colors:
-                tabla_widget.item(tableindex, 5).setBackground(colors[row[11]])
+            if finalizado_interno_num in colors:
+                tabla_widget.item(tableindex, 5).setBackground(colors[finalizado_interno_num])
+            if finalizado_num in colors:
+                tabla_widget.item(tableindex, 6).setBackground(colors[finalizado_num])
 
     def mostrar_eventos_especificos(self, tabla_widget, eventos):   
-        """TERMINAR"""     
         """Muestra los eventos en la tabla."""
         self.eventos = eventos
         # self.eventos.sort(key=lambda x: (x[7], x[10]))

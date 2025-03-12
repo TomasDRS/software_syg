@@ -15,13 +15,19 @@ class EDIT_EVENT(QMainWindow):
         self.user = user
         self.evento = evento
         self.tabla_seleccionada = tabla_seleccionada
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
+        self.flag_fecha = False
+        self.flag_estado_interno = False
+        self.flag_estado_admin = False
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
         self.setWindowTitle("Modificar Evento")
         self.button_edit.clicked.connect(self.editar_evento_user)
         self.button_cancelar.clicked.connect(self.close)
         self.check_interno.stateChanged.connect(self.check_interno_changed)
         self.combo_encargado_sector.currentIndexChanged.connect(self.mostrar_usuarios)
-        
+
+        self.date_fecha.dateChanged.connect(lambda: setattr(self, 'flag_fecha', True))
+        self.check_finalizado_interno.clicked.connect(lambda: setattr(self, 'flag_estado_interno', True))
+        self.check_finalizado.clicked.connect(lambda: setattr(self, 'flag_estado_admin', True))
         # sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(user)[4])
         # self.determinar_sectores(sectores)
 
@@ -49,7 +55,16 @@ class EDIT_EVENT(QMainWindow):
                 item.setCheckState(0, Qt.Checked)
         except:
             print("[ERROR] No se pudo cargar el encargado")
-        self.check_finalizado.setChecked(int(self.evento[11]))
+        info_estado = ast.literal_eval(self.evento[11])
+        if info_estado[0][0][0] == "1":
+            self.check_finalizado_interno.setChecked(True)
+        else:
+            self.check_finalizado_interno.setChecked(False)
+        
+        if info_estado[0][1][0] == "1":
+            self.check_finalizado.setChecked(True)
+        else:
+            self.check_finalizado.setChecked(False)
 
     def determinar_sectores(self, lista_sectores):
         sectores_index = {"syg_comex": 0, "syg_gestion": 1, "syg_ingenieria": 2, "syg_laboratorio": 3, "syg_visitas_ingenieria": 4,
@@ -119,11 +134,34 @@ class EDIT_EVENT(QMainWindow):
         fecha_actualizacion = datetime.now().strftime("%Y/%m/%d")
         hora_carga = datetime.now().strftime("%H:%M:%S")
         
-        descripcion_nueva = self.line_descripcion.toPlainText() + "\n" + str(fecha_actualizacion) + " - " + self.user + "\n" + self.line_actualizacion.toPlainText()
+        if self.line_actualizacion.toPlainText() != "":
+            descripcion_nueva = self.line_descripcion.toPlainText() + "\n" + str(fecha_actualizacion) + " - " + self.user + "\n" + self.line_actualizacion.toPlainText()
+        else:
+            descripcion_nueva = self.line_descripcion.toPlainText()
 
-        data = [self.evento[4], self.evento[1], self.line_descripcion.toPlainText(), 
-                descripcion_nueva, self.evento[10], self.evento[9]]
+        if self.flag_fecha:
+            fechas_viejas = ast.literal_eval(self.evento[9])
+            fechas_viejas.append([self.date_fecha.date().toString("yyyy/MM/dd"), self.user])
+            fecha_nueva = fechas_viejas
+        else:
+            fecha_nueva = self.evento[9]
+        
+        if self.flag_estado_interno:
+            if self.check_finalizado_interno.isChecked():
+                estado_encargado = "1"
+            else:
+                estado_encargado = "0"
+            estado_viejo = ast.literal_eval(self.evento[11])
+            estado_nuevo = estado_viejo
+            estado_nuevo[0][0] = estado_encargado
+            estado_nuevo[0][1] = fecha_actualizacion
+            estado_nuevo[0][2] = self.user
+        else:
+            estado_nuevo = self.evento[11]
 
+        data = [str(self.evento[4]), str(self.evento[1]), str(self.line_descripcion.toPlainText()), 
+            str(descripcion_nueva), str(self.evento[9]), str(fecha_nueva), str(self.evento[10]), str(estado_nuevo)]
+        
         self.claseSQLite.modificar_evento_user(self.tabla_seleccionada, *data)
 
         self.msg_modificado.exec_()

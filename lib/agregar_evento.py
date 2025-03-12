@@ -13,7 +13,7 @@ class ADD_EVENT(QMainWindow):
         uic.loadUi("gui\gui_agregar_evento.ui", self)  # Cargar la interfaz de Qt Designer
 
         self.user = user
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
         self.setWindowTitle("Agregar Evento")
         self.combo_empresa.setEditable(True)
         self.combo_empresa.setCurrentText("Seleccionar empresa")
@@ -108,10 +108,11 @@ class ADD_EVENT(QMainWindow):
                             4: "visitas_syg_ingenieria", 5: "events_syg_producto", 6: "events_mgm_academia", 7: "events_mgm_calidad",
                             8: "events_mgm_comercial", 9: "events_mgm_gestion", 10: "events_mgm_ingenieria", 11: "events_mgm_laboratorio", 
                             12: "events_mgm_producto", 13: "events_admin_administracion"}
+        fecha = self.date_fecha.date().toString("yyyy/MM/dd")
+        data_fecha = f"""["{fecha}", "{self.user}"]"""
 
-        data = [data_empresa, descripcion, self.line_archivos.text(), 
-                fecha_carga, hora_carga, "", "", self.user,
-                self.date_fecha.date().toString("yyyy/MM/dd"), lista_encargados, 0]
+        data = [data_empresa, descripcion, self.line_archivos.text(), fecha_carga, hora_carga,
+                "", "", self.user, data_fecha, lista_encargados, 0]
         
         sector = self.combo_sector.currentIndex()
         if sector in sector_table_map:

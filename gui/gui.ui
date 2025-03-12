@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -530,7 +533,7 @@ QTabBar::tab {
 	padding-bottom:2px;
 	padding-top:2px;
 	color:rgb(81,72,65);
-  	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(221,218,217,255), stop:1 rgba(240,239,238,255));
+background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(200, 197, 196, 255), stop:1 rgba(225, 224, 223, 255));
 	border-style: solid;
 	border-width: 1px;
   	border-top-right-radius:4px;
@@ -541,8 +544,9 @@ QTabBar::tab {
 	border-bottom-color: transparent;
 }
 QTabBar::tab::disabled {
-        background: #aaaaaa;  /* Color de fondo para pestañas deshabilitadas */
+        background: #505050;  /* Color de fondo para pestañas deshabilitadas */
         color: #666666;       /* Color del texto */
+		
 }
 QTabBar::tab:selected, QTabBar::tab:last:selected, QTabBar::tab:hover {
   	background-color:rgb(247,246,246);
@@ -2898,16 +2902,22 @@ color: grey;
      <string> Empresas </string>
     </property>
     <addaction name="action_agregar_empresa"/>
-    <addaction name="actionv1_0_2"/>
+    <addaction name="action_version"/>
    </widget>
    <addaction name="menuEmpresas"/>
   </widget>
   <action name="action_agregar_empresa">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Agregar una empresa</string>
    </property>
   </action>
-  <action name="actionv1_0_2">
+  <action name="action_version">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -2917,6 +2927,9 @@ color: grey;
    </property>
    <property name="text">
     <string>v1.0.2</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

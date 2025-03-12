@@ -45,14 +45,19 @@ class SQLite:
             cursor.execute(query, (fecha_carga, empresa, descripcion, encargado, fecha_evento))
             return cursor.fetchall()
 
-    def modificar_evento_user(self, tabla, fecha_carga, empresa, descripcion_vieja, descripcion_nueva, encargado, fecha_evento):
+    def modificar_evento_user(self, tabla, fecha_carga, empresa, descripcion_vieja, descripcion_nueva, fecha_vieja, fecha_nueva, encargado, estado_nuevo):
         """Modifica un evento en la tabla especificada."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            query = f"UPDATE {tabla} SET descripcion = ? WHERE fecha_carga = ? AND empresa = ? AND descripcion = ? AND encargado = ? AND fecha_evento = ?;"
-            cursor.execute(query, (descripcion_nueva, fecha_carga, empresa, descripcion_vieja, encargado, fecha_evento))
+            query = f"UPDATE {tabla} SET descripcion = ?, fecha_evento = ?, estado = ? WHERE fecha_carga = ? AND empresa = ? AND descripcion = ? AND encargado = ? AND fecha_evento = ?;"
+            cursor.execute(query, (descripcion_nueva, fecha_nueva, estado_nuevo, fecha_carga, empresa, descripcion_vieja, encargado, fecha_vieja))
 
-    # def modificar_evento_admin(self, tabla, fecha_carga, empresa_vieja, empresa_nueva, descripcion_vieja, descripcion_nueva, encargado_viejo,)
+    def modificar_evento_admin(self, tabla, fecha_carga, empresa_vieja, empresa_nueva, descripcion_vieja, descripcion_nueva, fecha_anterior, fecha_nueva, encargados_viejos, encargados_nuevos, estado_viejo, estado_nuevo):
+        """Modifica un evento en la tabla especificada."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            query = f"UPDATE {tabla} SET empresa = ?, descripcion = ?, fecha_evento = ?, encargado = ?, estado = ? WHERE fecha_carga = ? AND empresa = ? AND descripcion = ? AND fecha_evento = ? AND encargado = ? AND estado = ?;"
+            cursor.execute(query, (empresa_nueva, descripcion_nueva, fecha_nueva, encargados_nuevos, estado_nuevo, fecha_carga, empresa_vieja, descripcion_vieja, fecha_anterior, encargados_viejos, estado_viejo))
 
     def buscar_usuario(self, usuario):
         """Busca un usuario en la tabla de usuarios."""
