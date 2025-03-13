@@ -21,6 +21,9 @@ class ADD_EVENT(QMainWindow):
         self.button_cancelar.clicked.connect(self.close)
         self.check_interno.stateChanged.connect(self.check_interno_changed)
         self.combo_encargado_sector.currentIndexChanged.connect(self.mostrar_usuarios)
+
+        self.button_check.clicked.connect(lambda: self.check_all_items())
+        self.button_uncheck.clicked.connect(lambda: self.uncheck_all_items())
         
         sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(user)[4])
         self.determinar_sectores(sectores)
@@ -94,6 +97,24 @@ class ADD_EVENT(QMainWindow):
 
         return checked_items
 
+    def uncheck_all_items(self):
+        def uncheck_item(item):
+            item.setCheckState(0, Qt.Unchecked)  # Desmarcar el item
+            for i in range(item.childCount()):  # Recorrer hijos si los hay
+                uncheck_item(item.child(i))
+
+        for i in range(self.treeWidget.topLevelItemCount()):
+            uncheck_item(self.treeWidget.topLevelItem(i))
+
+    def check_all_items(self):
+        def check_item(item):
+            item.setCheckState(0, Qt.Checked)  # Desmarcar el item
+            for i in range(item.childCount()):  # Recorrer hijos si los hay
+                check_item(item.child(i))
+
+        for i in range(self.treeWidget.topLevelItemCount()):
+            check_item(self.treeWidget.topLevelItem(i))
+
     def crear_evento(self):
         fecha_carga = datetime.now().strftime("%Y/%m/%d")
         hora_carga = datetime.now().strftime("%H:%M:%S")
@@ -119,7 +140,7 @@ class ADD_EVENT(QMainWindow):
             self.claseSQLite.crear_evento(sector_table_map[sector], *data)
 
         self.msg_creado.exec_()
-        
+
     def check_interno_changed(self):
         if self.check_interno.isChecked():
             self.combo_empresa.setEnabled(False)

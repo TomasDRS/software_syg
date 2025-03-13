@@ -8,6 +8,7 @@ from lib.sql import SQLite
 from lib.agregar_evento import ADD_EVENT
 from lib.editar_evento import EDIT_EVENT
 from lib.agregar_empresa import ADD_COMPANY
+from datetime import datetime, date
 import ast
 
 class UI(QMainWindow):
@@ -27,7 +28,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.0.7 BUILD PRUEBA")
+        self.action_version.setText("Versión 1.0.8 BUILD PRUEBA")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
@@ -225,6 +226,10 @@ class UI(QMainWindow):
             ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
             # Formatear el string con salto de línea
             fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
+            
+            fmt = "%Y/%m/%d"  # Formato de la fecha
+            hoy = datetime.today().date()
+            fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
 
             for colindex, value in enumerate([row[0], row[4], row[1], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
                 try:
@@ -237,6 +242,18 @@ class UI(QMainWindow):
         
             colors = {"0": QColor(255, 0, 0, 100),
                     "1": QColor(0, 255, 0, 100),}
+            
+            # Calcular la diferencia en días
+            diferencia = (fecha_obj - hoy).days
+            if diferencia <= 7:
+                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 0, 0, 100))
+            elif 7 < diferencia <= 14:
+                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 120, 0, 100))
+            elif 14 < diferencia <= 21:
+                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 255, 0, 100))
+            elif diferencia > 21:
+                tabla_widget.item(tableindex, 5).setBackground(QColor(0, 255, 0, 100))
+
             if finalizado_interno_num in colors:
                 tabla_widget.item(tableindex, 6).setBackground(colors[finalizado_interno_num])
             if finalizado_num in colors:
@@ -244,7 +261,7 @@ class UI(QMainWindow):
 
         # Diccionario con los índices de columna y sus modos de ajuste
         resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
-                    2: QHeaderView.ResizeMode.Stretch, 3: QHeaderView.ResizeMode.Interactive,
+                    2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Stretch,
                     4: QHeaderView.ResizeMode.Interactive, 5: QHeaderView.ResizeMode.Interactive,            
                     6: QHeaderView.ResizeMode.Fixed, 7: QHeaderView.ResizeMode.Fixed}
         # Aplicar los modos en un bucle
@@ -290,6 +307,10 @@ class UI(QMainWindow):
             # Formatear el string con salto de línea
             fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
 
+            fmt = "%Y/%m/%d"  # Formato de la fecha
+            hoy = datetime.today()
+            fecha_obj = datetime.strptime(ultima_fecha, fmt).date()
+
             for colindex, value in enumerate([row[0], row[4], row[1], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
                 try:
                     tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
@@ -298,9 +319,21 @@ class UI(QMainWindow):
                     print("Error al agregar item o no existen items")
             num_saltos = row[2].count("\n")
             tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
-        
+
             colors = {"0": QColor(255, 0, 0, 100),
                     "1": QColor(0, 255, 0, 100),}
+
+            # Calcular la diferencia en días
+            diferencia = (fecha_obj - hoy).days
+            if diferencia <= 7:
+                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 0, 0, 100))
+            elif 7 < diferencia <= 14:
+                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 120, 0, 100))
+            elif 14 < diferencia <= 21:
+                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 255, 0, 100))
+            elif diferencia > 21:
+                tabla_widget.item(tableindex, 5).setBackground(QColor(0, 255, 0, 100))
+
             if finalizado_interno_num in colors:
                 tabla_widget.item(tableindex, 6).setBackground(colors[finalizado_interno_num])
             if finalizado_num in colors:
@@ -308,7 +341,7 @@ class UI(QMainWindow):
 
         # Diccionario con los índices de columna y sus modos de ajuste
         resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
-                    2: QHeaderView.ResizeMode.Stretch, 3: QHeaderView.ResizeMode.Interactive,
+                    2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Stretch,
                     4: QHeaderView.ResizeMode.Interactive, 5: QHeaderView.ResizeMode.Interactive,            
                     6: QHeaderView.ResizeMode.Fixed, 7: QHeaderView.ResizeMode.Fixed}
         # Aplicar los modos en un bucle

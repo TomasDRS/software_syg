@@ -1,5 +1,0 @@
-import ast
-
-string_lista = """[["1", "2025/03/11", "Tomas Draese"], ["0", "2025/03/11", "German Roldan"]]"""
-lista = ast.literal_eval(string_lista)
-print(lista[0])

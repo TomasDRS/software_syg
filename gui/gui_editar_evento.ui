@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>570</width>
-    <height>755</height>
+    <width>592</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -682,20 +682,6 @@ border-width:0px;</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="label_10">
-               <property name="styleSheet">
-                <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-               </property>
-               <property name="text">
-                <string>el día</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="3">
               <widget class="QLabel" name="label_fecha">
                <property name="minimumSize">
@@ -713,6 +699,74 @@ border-width:0px;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_10">
+               <property name="styleSheet">
+                <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+               </property>
+               <property name="text">
+                <string>el día</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="14" column="0" colspan="5">
+           <widget class="QFrame" name="frame_6">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="check_finalizado">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::DefaultContextMenu</enum>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;
+padding-right: 130px;</string>
+               </property>
+               <property name="text">
+                <string>Finalizado                                   </string>
+               </property>
+               <property name="tristate">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="check_finalizado_interno">
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;
+padding-right: 130px;</string>
+               </property>
+               <property name="text">
+                <string>Finalizado interno                             </string>
                </property>
               </widget>
              </item>
@@ -802,58 +856,23 @@ border-width:0px;</string>
             </layout>
            </widget>
           </item>
-          <item row="14" column="0" colspan="5">
-           <widget class="QFrame" name="frame_6">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+          <item row="6" column="2" colspan="3">
+           <widget class="QTextEdit" name="line_actualizacion">
+            <property name="styleSheet">
+             <string notr="true">QTextEdit{
+	border-style:solid;
+	border-width:1px;
+	border-color:grey;
+	font: 10pt &quot;MS Shell Dlg 2&quot;;
+}
+
+QTextEdit:hover {
+	border-style:solid;
+	border-width:1px;
+	border-color:black;
+}
+</string>
             </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_7">
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="check_finalizado">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
-               </property>
-               <property name="contextMenuPolicy">
-                <enum>Qt::DefaultContextMenu</enum>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::RightToLeft</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;
-padding-right: 130px;</string>
-               </property>
-               <property name="text">
-                <string>Finalizado                                   </string>
-               </property>
-               <property name="tristate">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QCheckBox" name="check_finalizado_interno">
-               <property name="layoutDirection">
-                <enum>Qt::RightToLeft</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;
-padding-right: 130px;</string>
-               </property>
-               <property name="text">
-                <string>Finalizado interno                             </string>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </widget>
           </item>
           <item row="5" column="2" colspan="3">
@@ -913,7 +932,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <property name="styleSheet">
              <string notr="true">
-	font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+	font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -932,28 +951,8 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
 border-width:0px;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QLabel" name="label_6">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Sector</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -993,69 +992,190 @@ border-width:0px;</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="2" colspan="3">
-           <widget class="QTextEdit" name="line_actualizacion">
-            <property name="styleSheet">
-             <string notr="true">QTextEdit{
-	border-style:solid;
-	border-width:1px;
-	border-color:grey;
-	font: 10pt &quot;MS Shell Dlg 2&quot;;
-}
-
-QTextEdit:hover {
-	border-style:solid;
-	border-width:1px;
-	border-color:black;
-}
-</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="3" colspan="2">
-           <widget class="QDateEdit" name="date_fecha_anterior">
-            <property name="enabled">
-             <bool>false</bool>
+          <item row="3" column="0" rowspan="2" colspan="2">
+           <widget class="QLabel" name="label_3">
+            <property name="maximumSize">
+             <size>
+              <width>175</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="styleSheet">
              <string notr="true">
-	font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+	font: 12pt &quot;MS Shell Dlg 2&quot;;font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Empresa</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
-            <property name="readOnly">
-             <bool>false</bool>
-            </property>
-            <property name="dateTime">
-             <datetime>
-              <hour>0</hour>
-              <minute>0</minute>
-              <second>0</second>
-              <year>2025</year>
-              <month>1</month>
-              <day>1</day>
-             </datetime>
-            </property>
-            <property name="displayFormat">
-             <string>yyyy/MM/dd</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
            </widget>
           </item>
-          <item row="8" column="2">
-           <widget class="QLabel" name="label_nombre_fecha">
+          <item row="6" column="0" colspan="2">
+           <widget class="QLabel" name="label_2">
+            <property name="maximumSize">
+             <size>
+              <width>175</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
 border-width:0px;</string>
             </property>
             <property name="text">
-             <string/>
+             <string>Actualización</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QLabel" name="label_4">
+            <property name="maximumSize">
+             <size>
+              <width>175</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Descripción</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QLabel" name="label_8">
+            <property name="maximumSize">
+             <size>
+              <width>175</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Archivos</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QLabel" name="label_9">
+            <property name="maximumSize">
+             <size>
+              <width>175</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Fechas anteriores</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0" colspan="2">
+           <widget class="QLabel" name="label_7">
+            <property name="maximumSize">
+             <size>
+              <width>175</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Encargados</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0" colspan="2">
+           <widget class="QLabel" name="label">
+            <property name="maximumSize">
+             <size>
+              <width>175</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string> Fecha de finalización </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="label_6">
+            <property name="maximumSize">
+             <size>
+              <width>175</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Sector</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2" colspan="3">
+           <widget class="QComboBox" name="combo_fechas_anteriores">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+QComboBox{
+	border-style:solid;
+	border-width:1px;
+	border-color:grey;
+	font: 13pt &quot;MS Shell Dlg 2&quot;;
+}
+
+QComboBox:hover {
+	border-style:solid;
+	border-width:1px;
+	border-color:black;
+}
+</string>
             </property>
            </widget>
           </item>
@@ -1180,150 +1300,6 @@ QComboBox:hover {
             </layout>
            </widget>
           </item>
-          <item row="3" column="0" rowspan="2" colspan="2">
-           <widget class="QLabel" name="label_3">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-	font: 12pt &quot;MS Shell Dlg 2&quot;;font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Empresa</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QLabel" name="label_4">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Descripción</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignHCenter|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QLabel" name="label_2">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Actualización</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignHCenter|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QLabel" name="label_8">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Archivos</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QLabel" name="label_9">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Fecha anterior</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0" colspan="2">
-           <widget class="QLabel" name="label">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string> Fecha de finalización </string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0" colspan="2">
-           <widget class="QLabel" name="label_7">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Encargados</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="2" colspan="3">
            <widget class="QComboBox" name="combo_sector">
             <property name="enabled">
@@ -1335,7 +1311,7 @@ QComboBox{
 	border-style:solid;
 	border-width:1px;
 	border-color:grey;
-	font: 13pt &quot;MS Shell Dlg 2&quot;;
+	font: 11pt &quot;MS Shell Dlg 2&quot;;
 }
 
 QComboBox:hover {

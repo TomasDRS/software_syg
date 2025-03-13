@@ -20,17 +20,24 @@ class EDIT_EVENT(QMainWindow):
         self.flag_estado_admin = False
         self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
         self.setWindowTitle("Modificar Evento")
-        self.button_edit.clicked.connect(self.editar_evento_user)
+        if self.user == "German Roldan" or self.user == "Matias Roldan":
+            self.desbloquear_admin()
+            self.button_edit.clicked.connect(self.editar_evento_admin)
+        else:
+            self.button_edit.clicked.connect(self.editar_evento_user)
         self.button_cancelar.clicked.connect(self.close)
         self.check_interno.stateChanged.connect(self.check_interno_changed)
         self.combo_encargado_sector.currentIndexChanged.connect(self.mostrar_usuarios)
+
+        
+        self.button_check.clicked.connect(lambda: self.check_all_items())
+        self.button_uncheck.clicked.connect(lambda: self.uncheck_all_items())
 
         self.date_fecha.dateChanged.connect(lambda: setattr(self, 'flag_fecha', True))
         self.check_finalizado_interno.clicked.connect(lambda: setattr(self, 'flag_estado_interno', True))
         self.check_finalizado.clicked.connect(lambda: setattr(self, 'flag_estado_admin', True))
         # sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(user)[4])
         # self.determinar_sectores(sectores)
-
         self.mostrar_evento()
 
         self.msg_modificado = QMessageBox()
@@ -47,7 +54,6 @@ class EDIT_EVENT(QMainWindow):
         self.label_fecha.setText(self.evento[4])
         self.line_descripcion.setPlainText(self.evento[2])
         self.line_archivos.setText(self.evento[3])
-        self.date_fecha.setDate(QDate.fromString(self.evento[9], "yyyy/MM/dd"))
         self.encargados = ast.literal_eval(self.evento[10])
         try:
             for encargado in self.encargados:
@@ -56,15 +62,15 @@ class EDIT_EVENT(QMainWindow):
         except:
             print("[ERROR] No se pudo cargar el encargado")
         info_estado = ast.literal_eval(self.evento[11])
-        if info_estado[0][0][0] == "1":
-            self.check_finalizado_interno.setChecked(True)
-        else:
-            self.check_finalizado_interno.setChecked(False)
+
+        lista_fechas_anteriores = ast.literal_eval(self.evento[9])
+        for fecha in reversed(lista_fechas_anteriores[:-1]):
+            self.combo_fechas_anteriores.addItems([fecha[1] + " - " + fecha[0]])
         
-        if info_estado[0][1][0] == "1":
-            self.check_finalizado.setChecked(True)
-        else:
-            self.check_finalizado.setChecked(False)
+        self.date_fecha.setDate(QDate.fromString(lista_fechas_anteriores[-1][0], "yyyy/MM/dd"))
+
+        self.check_finalizado_interno.setChecked(info_estado[0][0][0] == "1")
+        self.check_finalizado.setChecked(info_estado[0][1][0] == "1")
 
     def determinar_sectores(self, lista_sectores):
         sectores_index = {"syg_comex": 0, "syg_gestion": 1, "syg_ingenieria": 2, "syg_laboratorio": 3, "syg_visitas_ingenieria": 4,
@@ -73,7 +79,7 @@ class EDIT_EVENT(QMainWindow):
 
         # Desactivar todos los elementos en el combo_sector
         model = self.combo_sector.model()
-        for i in range(len(sectores_index)):  
+        for i in range(len(sectores_index)):
             model.item(i).setEnabled(False)
 
         # Activar los sectores del encargado
@@ -165,10 +171,104 @@ class EDIT_EVENT(QMainWindow):
         self.claseSQLite.modificar_evento_user(self.tabla_seleccionada, *data)
 
         self.msg_modificado.exec_()
+
+    def editar_evento_admin(self):
+        fecha_actualizacion = datetime.now().strftime("%Y/%m/%d")
+        hora_carga = datetime.now().strftime("%H:%M:%S")
+
+        if self.line_actualizacion.toPlainText() != "":
+            descripcion_nueva = self.line_descripcion.toPlainText() + "\n" + str(fecha_actualizacion) + " - " + self.user + "\n" + self.line_actualizacion.toPlainText()
+        else:
+            descripcion_nueva = self.line_descripcion.toPlainText()
+
+        if self.flag_fecha:
+            fechas_viejas = ast.literal_eval(self.evento[9])
+            fechas_viejas.append([self.date_fecha.date().toString("yyyy/MM/dd"), self.user])
+            fecha_nueva = fechas_viejas
+        else:
+            fecha_nueva = self.evento[9]
         
+        if self.flag_estado_interno:
+            if self.check_finalizado_interno.isChecked():
+                estado_encargado = "1"
+            else:
+                estado_encargado = "0"
+            estado_viejo = ast.literal_eval(self.evento[11])
+            estado_nuevo = estado_viejo
+            estado_nuevo[0][0] = estado_encargado
+            estado_nuevo[0][1] = fecha_actualizacion
+            estado_nuevo[0][2] = self.user
+        else:
+            estado_nuevo = self.evento[11]
+
+        if self.flag_estado_admin:
+            if self.check_finalizado.isChecked():
+                estado_admin = "1"
+            else:
+                estado_admin = "0"
+            estado_viejo = ast.literal_eval(self.evento[11])
+            estado_nuevo = estado_viejo
+            estado_nuevo[1][0] = estado_admin
+            estado_nuevo[1][1] = fecha_actualizacion
+            estado_nuevo[1][2] = self.user
+        else:
+            estado_nuevo = self.evento[11]
+        
+        data_empresa = "Interno" if self.check_interno.isChecked() else self.combo_empresa.currentText()
+        
+        lista_encargados_nuevos = self.get_checked_items(self.treeWidget)
+
+        data = [str(self.evento[4]), str(self.evento[1]), data_empresa, str(self.line_descripcion.toPlainText()), 
+            str(descripcion_nueva), str(self.evento[9]), str(fecha_nueva), str(self.evento[10]),
+            str(lista_encargados_nuevos), str(self.evento[11]), str(estado_nuevo)]
+
+        self.claseSQLite.modificar_evento_admin(self.tabla_seleccionada, *data)
+
+        self.msg_modificado.exec_()
+
+    def get_checked_items(self, tree_widget):
+        checked_items = []
+
+        def check_item(item):
+            if item.checkState(0) == 2:  # Qt.Checked (2) significa que está marcado
+                checked_items.append(item.text(0))
+            for i in range(item.childCount()):
+                check_item(item.child(i))
+
+        for i in range(tree_widget.topLevelItemCount()):
+            check_item(tree_widget.topLevelItem(i))
+
+        return checked_items
+
     def check_interno_changed(self):
         if self.check_interno.isChecked():
             self.combo_empresa.setEnabled(False)
         else:
             self.combo_empresa.setEnabled(True)
 
+    def uncheck_all_items(self):
+        def uncheck_item(item):
+            item.setCheckState(0, Qt.Unchecked)  # Desmarcar el item
+            for i in range(item.childCount()):  # Recorrer hijos si los hay
+                uncheck_item(item.child(i))
+
+        for i in range(self.treeWidget.topLevelItemCount()):
+            uncheck_item(self.treeWidget.topLevelItem(i))
+
+    def check_all_items(self):
+        def check_item(item):
+            item.setCheckState(0, Qt.Checked)  # Desmarcar el item
+            for i in range(item.childCount()):  # Recorrer hijos si los hay
+                check_item(item.child(i))
+
+        for i in range(self.treeWidget.topLevelItemCount()):
+            check_item(self.treeWidget.topLevelItem(i))
+
+    def desbloquear_admin(self):
+        self.combo_empresa.setEnabled(True)
+        self.line_descripcion.setEnabled(True)
+        self.treeWidget.setEnabled(True)
+        self.combo_encargado_sector.setEnabled(True)
+        self.button_check.setEnabled(True)
+        self.button_uncheck.setEnabled(True)
+        self.check_finalizado.setEnabled(True)
