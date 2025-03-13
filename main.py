@@ -28,13 +28,19 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.0.9")
+        self.action_version.setText("Versión 1.0.9.1 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
                             self.boton_agregar_mgm_academia, self.boton_agregar_mgm_calidad, self.boton_agregar_mgm_comercial, 
                             self.boton_agregar_mgm_gestion, self.boton_agregar_mgm_ingenieria, self.boton_agregar_mgm_laboratorio, 
                             self.boton_agregar_mgm_producto]
+        
+        botones_eliminar = [self.boton_eliminar_syg_comex, self.boton_eliminar_syg_gestion, self.boton_eliminar_syg_ingenieria,
+                            self.boton_eliminar_syg_laboratorio, self.boton_eliminar_syg_visitas_ingenieria, self.boton_eliminar_syg_producto, 
+                            self.boton_eliminar_mgm_academia, self.boton_eliminar_mgm_calidad, self.boton_eliminar_mgm_comercial, 
+                            self.boton_eliminar_mgm_gestion, self.boton_eliminar_mgm_ingenieria, self.boton_eliminar_mgm_laboratorio, 
+                            self.boton_eliminar_mgm_producto]
         
         botones_refresh = [self.boton_refrescar_syg_comex, self.boton_refrescar_syg_gestion, self.boton_refrescar_syg_ingenieria,
                             self.boton_refrescar_syg_laboratorio, self.boton_refrescar_syg_visitas_ingenieria, self.boton_refrescar_syg_producto, 
@@ -197,10 +203,10 @@ class UI(QMainWindow):
         tabla_widget.horizontalHeader().setVisible(True)
         tabla_widget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         tabla_widget.setRowCount(len(self.eventos))
-        tabla_widget.setColumnCount(8)
+        tabla_widget.setColumnCount(9)
         
-        column_width = [30, 100, 100, 500, 180, 120, 120, 120]
-        headers = ["id", "Fecha Carga", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
+        column_width = [30, 100, 100, 200, 500, 180, 120, 120, 120]
+        headers = ["id", "Fecha Carga", "Empresa", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
         for i, header in enumerate(headers):
             tabla_widget.setColumnWidth(i, column_width[i])
         tabla_widget.setHorizontalHeaderLabels(headers)
@@ -231,7 +237,7 @@ class UI(QMainWindow):
             hoy = datetime.today().date()
             fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
 
-            for colindex, value in enumerate([row[0], row[4], row[1], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
+            for colindex, value in enumerate([row[0], row[4], row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
                 try:
                     tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
                     tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
@@ -246,24 +252,25 @@ class UI(QMainWindow):
             # Calcular la diferencia en días
             diferencia = (fecha_obj - hoy).days
             if diferencia <= 7:
-                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 0, 0, 100))
+                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 0, 0, 100))
             elif 7 < diferencia <= 14:
-                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 120, 0, 100))
+                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 120, 0, 100))
             elif 14 < diferencia <= 21:
-                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 255, 0, 100))
+                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 255, 0, 100))
             elif diferencia > 21:
-                tabla_widget.item(tableindex, 5).setBackground(QColor(0, 255, 0, 100))
+                tabla_widget.item(tableindex, 6).setBackground(QColor(0, 255, 0, 100))
 
             if finalizado_interno_num in colors:
-                tabla_widget.item(tableindex, 6).setBackground(colors[finalizado_interno_num])
+                tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_interno_num])
             if finalizado_num in colors:
-                tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_num])
+                tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_num])
 
         # Diccionario con los índices de columna y sus modos de ajuste
         resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
-                    2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Stretch,
-                    4: QHeaderView.ResizeMode.Interactive, 5: QHeaderView.ResizeMode.Interactive,            
-                    6: QHeaderView.ResizeMode.Fixed, 7: QHeaderView.ResizeMode.Fixed}
+                    2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Interactive,
+                    4: QHeaderView.ResizeMode.Stretch, 5: QHeaderView.ResizeMode.Interactive,            
+                    6: QHeaderView.ResizeMode.Interactive, 7: QHeaderView.ResizeMode.Fixed, 
+                    8: QHeaderView.ResizeMode.Fixed}
         # Aplicar los modos en un bucle
         for col, mode in resize_modes.items():
             tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
@@ -277,10 +284,10 @@ class UI(QMainWindow):
         tabla_widget.horizontalHeader().setVisible(True)
         tabla_widget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         tabla_widget.setRowCount(len(self.eventos))
-        tabla_widget.setColumnCount(8)
-
-        column_width = [30, 100, 100, 500, 180, 120, 120, 120]
-        headers = ["id", "Fecha Carga", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
+        tabla_widget.setColumnCount(9)
+        
+        column_width = [30, 100, 100, 200, 500, 180, 120, 120, 120]
+        headers = ["id", "Fecha Carga", "Empresa", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
         for i, header in enumerate(headers):
             tabla_widget.setColumnWidth(i, column_width[i])
         tabla_widget.setHorizontalHeaderLabels(headers)
@@ -326,24 +333,25 @@ class UI(QMainWindow):
             # Calcular la diferencia en días
             diferencia = (fecha_obj - hoy).days
             if diferencia <= 7:
-                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 0, 0, 100))
+                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 0, 0, 100))
             elif 7 < diferencia <= 14:
-                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 120, 0, 100))
+                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 120, 0, 100))
             elif 14 < diferencia <= 21:
-                tabla_widget.item(tableindex, 5).setBackground(QColor(255, 255, 0, 100))
+                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 255, 0, 100))
             elif diferencia > 21:
-                tabla_widget.item(tableindex, 5).setBackground(QColor(0, 255, 0, 100))
+                tabla_widget.item(tableindex, 6).setBackground(QColor(0, 255, 0, 100))
 
             if finalizado_interno_num in colors:
-                tabla_widget.item(tableindex, 6).setBackground(colors[finalizado_interno_num])
+                tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_interno_num])
             if finalizado_num in colors:
-                tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_num])
+                tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_num])
 
         # Diccionario con los índices de columna y sus modos de ajuste
         resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
-                    2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Stretch,
-                    4: QHeaderView.ResizeMode.Interactive, 5: QHeaderView.ResizeMode.Interactive,            
-                    6: QHeaderView.ResizeMode.Fixed, 7: QHeaderView.ResizeMode.Fixed}
+                    2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Interactive,
+                    4: QHeaderView.ResizeMode.Stretch, 5: QHeaderView.ResizeMode.Interactive,            
+                    6: QHeaderView.ResizeMode.Interactive, 7: QHeaderView.ResizeMode.Fixed, 
+                    8: QHeaderView.ResizeMode.Fixed}
         # Aplicar los modos en un bucle
         for col, mode in resize_modes.items():
             tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
