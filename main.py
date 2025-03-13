@@ -17,7 +17,7 @@ class UI(QMainWindow):
         uic.loadUi(r"gui\gui.ui", self)  # Cargar la interfaz de Qt Designer
         
         self.user = user
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
         self.ventana_agregar_evento = ADD_EVENT(user)
         # self.ventana_agregar_empresa = ADD_COMPANY()
 
@@ -28,7 +28,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.0.8 BUILD PRUEBA")
+        self.action_version.setText("Versión 1.0.9")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
@@ -236,7 +236,7 @@ class UI(QMainWindow):
                     tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
                     tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
                 except:
-                    print("Error al agregar item o no existen items")
+                    print("[ERROR] Error al agregar item o no existen items")
             num_saltos = row[2].count("\n")
             tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
         
@@ -308,7 +308,7 @@ class UI(QMainWindow):
             fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
 
             fmt = "%Y/%m/%d"  # Formato de la fecha
-            hoy = datetime.today()
+            hoy = datetime.today().date()
             fecha_obj = datetime.strptime(ultima_fecha, fmt).date()
 
             for colindex, value in enumerate([row[0], row[4], row[1], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
@@ -316,7 +316,7 @@ class UI(QMainWindow):
                     tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
                     tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
                 except:
-                    print("Error al agregar item o no existen items")
+                    print("[ERROR] Error al agregar item o no existen items")
             num_saltos = row[2].count("\n")
             tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
 

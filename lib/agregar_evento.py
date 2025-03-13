@@ -13,7 +13,7 @@ class ADD_EVENT(QMainWindow):
         uic.loadUi("gui\gui_agregar_evento.ui", self)  # Cargar la interfaz de Qt Designer
 
         self.user = user
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
         self.setWindowTitle("Agregar Evento")
         self.combo_empresa.setEditable(True)
         self.combo_empresa.setCurrentText("Seleccionar empresa")

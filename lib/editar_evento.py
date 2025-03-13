@@ -18,7 +18,7 @@ class EDIT_EVENT(QMainWindow):
         self.flag_fecha = False
         self.flag_estado_interno = False
         self.flag_estado_admin = False
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
         self.setWindowTitle("Modificar Evento")
         if self.user == "German Roldan" or self.user == "Matias Roldan":
             self.desbloquear_admin()
