@@ -32,9 +32,17 @@ class SQLite:
         """Busca eventos por una palabra clave en cualquier campo de la tabla especificada."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            query = f"SELECT * FROM {tabla} WHERE empresa LIKE ? OR descripcion LIKE ? OR archivos LIKE ? OR fecha_carga LIKE ? OR hora_carga LIKE ? OR fecha_mod LIKE ? OR actualizaciones LIKE ? OR cargado_por LIKE ? OR fecha_evento LIKE ? OR encargado LIKE ? OR estado LIKE ?;"
+            query = f"SELECT * FROM {tabla} WHERE id LIKE ? OR empresa LIKE ? OR descripcion LIKE ? OR archivos LIKE ? OR fecha_carga LIKE ? OR hora_carga LIKE ? OR fecha_mod LIKE ? OR actualizaciones LIKE ? OR cargado_por LIKE ? OR fecha_evento LIKE ? OR encargado LIKE ? OR estado LIKE ?;"
             keyword = f"%{keyword}%"
-            cursor.execute(query, (keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword))
+            cursor.execute(query, (keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword))
+            return cursor.fetchall()
+
+    def buscar_evento_por_id(self, tabla, id):
+        """Busca eventos por ID en la tabla especificada."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            query = f"SELECT * FROM {tabla} WHERE id = ?;"
+            cursor.execute(query, (id,))
             return cursor.fetchall()
 
     def buscar_evento_especifico(self, tabla, fecha_carga, empresa, descripcion, encargado, fecha_evento):

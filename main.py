@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QCalendarWidget, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QCalendarWidget, QMessageBox, QHeaderView
 from PyQt5.QtGui import QPainter, QColor, QFont
 from PyQt5.QtCore import QDate, QPoint, Qt, QTimer
 from PyQt5 import QtWidgets
@@ -42,10 +42,10 @@ class UI(QMainWindow):
                             self.boton_refrescar_mgm_producto]
         
         lines_buscar = [self.line_buscar_tabla_syg_comex, self.line_buscar_tabla_syg_gestion, self.line_buscar_tabla_syg_ingenieria,
-            self.line_buscar_tabla_syg_laboratorio, self.line_buscar_tabla_syg_visitas_ingenieria, self.line_buscar_tabla_syg_producto, 
-            self.line_buscar_tabla_mgm_academia, self.line_buscar_tabla_mgm_calidad, self.line_buscar_tabla_mgm_comercial, 
-            self.line_buscar_tabla_mgm_gestion, self.line_buscar_tabla_mgm_ingenieria, self.line_buscar_tabla_mgm_laboratorio, 
-            self.line_buscar_tabla_mgm_producto]
+                        self.line_buscar_tabla_syg_laboratorio, self.line_buscar_tabla_syg_visitas_ingenieria, self.line_buscar_tabla_syg_producto, 
+                        self.line_buscar_tabla_mgm_academia, self.line_buscar_tabla_mgm_calidad, self.line_buscar_tabla_mgm_comercial, 
+                        self.line_buscar_tabla_mgm_gestion, self.line_buscar_tabla_mgm_ingenieria, self.line_buscar_tabla_mgm_laboratorio, 
+                        self.line_buscar_tabla_mgm_producto]
 
         for boton in botones_agregar:
             boton.clicked.connect(self.ventana_agregar_evento.show)
@@ -171,7 +171,7 @@ class UI(QMainWindow):
                             'mgm_ingenieria': ["events_mgm_ingenieria", self.tabla_eventos_mgm_ingenieria],
                             'mgm_laboratorio': ["events_mgm_laboratorio", self.tabla_eventos_mgm_laboratorio], 
                             'mgm_producto': ["events_mgm_producto", self.tabla_eventos_mgm_producto]}
-        
+
         for sector in sectores:
             data = tablas_por_sectores[sector]
             tabla_widget = data[1]
@@ -192,16 +192,17 @@ class UI(QMainWindow):
         self.eventos = self.claseSQLite.leer_eventos(tabla_db)
         # self.eventos.sort(key=lambda x: (x[7], x[10]))
         tabla_widget.clear()
-        column_width = [100, 100, 500, 180, 120, 120, 120]
-        headers = ["Fecha Carga", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
-        for i, header in enumerate(headers):
-            tabla_widget.setColumnWidth(i, column_width[i])
 
-        tabla_widget.setHorizontalHeaderLabels(headers)
         tabla_widget.horizontalHeader().setVisible(True)
         tabla_widget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         tabla_widget.setRowCount(len(self.eventos))
-        tabla_widget.setColumnCount(7)
+        tabla_widget.setColumnCount(8)
+        
+        column_width = [30, 100, 100, 500, 180, 120, 120, 120]
+        headers = ["id", "Fecha Carga", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
+        for i, header in enumerate(headers):
+            tabla_widget.setColumnWidth(i, column_width[i])
+        tabla_widget.setHorizontalHeaderLabels(headers)
 
         tableindex = 0
 
@@ -225,7 +226,7 @@ class UI(QMainWindow):
             # Formatear el string con salto de línea
             fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
 
-            for colindex, value in enumerate([row[4], row[1], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
+            for colindex, value in enumerate([row[0], row[4], row[1], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
                 try:
                     tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
                     tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
@@ -237,51 +238,82 @@ class UI(QMainWindow):
             colors = {"0": QColor(255, 0, 0, 100),
                     "1": QColor(0, 255, 0, 100),}
             if finalizado_interno_num in colors:
-                tabla_widget.item(tableindex, 5).setBackground(colors[finalizado_interno_num])
+                tabla_widget.item(tableindex, 6).setBackground(colors[finalizado_interno_num])
             if finalizado_num in colors:
-                tabla_widget.item(tableindex, 6).setBackground(colors[finalizado_num])
+                tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_num])
 
-        tabla_widget.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Interactive)
-        tabla_widget.horizontalHeader().setSectionResizeMode(1, QtWidgets.QHeaderView.Interactive)
-        tabla_widget.horizontalHeader().setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
-        tabla_widget.horizontalHeader().setSectionResizeMode(3, QtWidgets.QHeaderView.Interactive)
-        tabla_widget.horizontalHeader().setSectionResizeMode(4, QtWidgets.QHeaderView.Interactive)
-        tabla_widget.horizontalHeader().setSectionResizeMode(5, QtWidgets.QHeaderView.Fixed)
-        tabla_widget.horizontalHeader().setSectionResizeMode(6, QtWidgets.QHeaderView.Fixed)
+        # Diccionario con los índices de columna y sus modos de ajuste
+        resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
+                    2: QHeaderView.ResizeMode.Stretch, 3: QHeaderView.ResizeMode.Interactive,
+                    4: QHeaderView.ResizeMode.Interactive, 5: QHeaderView.ResizeMode.Interactive,            
+                    6: QHeaderView.ResizeMode.Fixed, 7: QHeaderView.ResizeMode.Fixed}
+        # Aplicar los modos en un bucle
+        for col, mode in resize_modes.items():
+            tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
 
     def mostrar_eventos_especificos(self, tabla_widget, eventos):   
         """Muestra los eventos en la tabla."""
         self.eventos = eventos
         # self.eventos.sort(key=lambda x: (x[7], x[10]))
         tabla_widget.clear()
-        column_width = [100, 100, 500, 250, 100, 75]
-        headers = ["Fecha Carga", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Finalizado"]
-        for i, header in enumerate(headers):
-            tabla_widget.setColumnWidth(i, column_width[i])
 
-        tabla_widget.setHorizontalHeaderLabels(headers)
         tabla_widget.horizontalHeader().setVisible(True)
         tabla_widget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         tabla_widget.setRowCount(len(self.eventos))
-        tabla_widget.setColumnCount(6)
+        tabla_widget.setColumnCount(8)
+
+        column_width = [30, 100, 100, 500, 180, 120, 120, 120]
+        headers = ["id", "Fecha Carga", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
+        for i, header in enumerate(headers):
+            tabla_widget.setColumnWidth(i, column_width[i])
+        tabla_widget.setHorizontalHeaderLabels(headers)
 
         tableindex = 0
 
         for tableindex, row in enumerate(self.eventos):
-            for colindex, value in enumerate([row[4], row[1], row[2], row[10], row[9], row[11]]):
+
+            lista_finalizado = ast.literal_eval(row[11])  # Convierte la cadena en lista, ejemplo lista_finalizado = [["1", "2025/03/11", "Juan Doe"], ["0", "2025/03/11", "Juan Doe"]]
+
+            # Desempaquetamos las listas internas
+            finalizado_interno_num, fecha_interno, encargado_interno = lista_finalizado[0]
+            finalizado_num, fecha, encargado = lista_finalizado[1]
+
+            # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
+            finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno}\n{encargado_interno}"
+            finalizado = f"{finalizado_num}\n{fecha}\n{encargado}"
+
+            lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
+            encargados_formateado = "\n".join(lista_encargados)
+
+            lista_fechas_limite = ast.literal_eval(row[9])
+            ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
+            # Formatear el string con salto de línea
+            fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
+
+            for colindex, value in enumerate([row[0], row[4], row[1], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
                 try:
                     tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
                     tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
                 except:
                     print("Error al agregar item o no existen items")
             num_saltos = row[2].count("\n")
-            tabla_widget.setRowHeight(tableindex, 30 + 20*num_saltos)
+            tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
         
             colors = {"0": QColor(255, 0, 0, 100),
                     "1": QColor(0, 255, 0, 100),}
-            if row[11] in colors:
-                tabla_widget.item(tableindex, 5).setBackground(colors[row[11]])
+            if finalizado_interno_num in colors:
+                tabla_widget.item(tableindex, 6).setBackground(colors[finalizado_interno_num])
+            if finalizado_num in colors:
+                tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_num])
 
+        # Diccionario con los índices de columna y sus modos de ajuste
+        resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
+                    2: QHeaderView.ResizeMode.Stretch, 3: QHeaderView.ResizeMode.Interactive,
+                    4: QHeaderView.ResizeMode.Interactive, 5: QHeaderView.ResizeMode.Interactive,            
+                    6: QHeaderView.ResizeMode.Fixed, 7: QHeaderView.ResizeMode.Fixed}
+        # Aplicar los modos en un bucle
+        for col, mode in resize_modes.items():
+            tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
 
     def llamar_editar_evento(self, tabla_seleccionada):
         """Abre la ventana de edición de eventos."""
@@ -298,7 +330,7 @@ class UI(QMainWindow):
         descripcion = datos_evento[2].text()
         encargado = datos_evento[3].text()
         fecha_evento = datos_evento[4].text()  
-        evento = self.claseSQLite.buscar_evento_especifico(sector_table_map[tabla_seleccionada], fecha_carga, empresa, descripcion, encargado, fecha_evento)
+        evento = self.claseSQLite.buscar_evento_por_id(sector_table_map[tabla_seleccionada], datos_evento[0].text())
         self.ventana_editar_evento = EDIT_EVENT(self.user, sector_table_map[tabla_seleccionada], evento[0])
         self.ventana_editar_evento.show()
 
