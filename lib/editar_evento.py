@@ -18,7 +18,7 @@ class EDIT_EVENT(QMainWindow):
         self.flag_fecha = False
         self.flag_estado_interno = False
         self.flag_estado_admin = False
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
         self.setWindowTitle("Modificar Evento")
         if self.user == "German Roldan" or self.user == "Matias Roldan":
             self.desbloquear_admin()
@@ -29,7 +29,6 @@ class EDIT_EVENT(QMainWindow):
         self.check_interno.stateChanged.connect(self.check_interno_changed)
         self.combo_encargado_sector.currentIndexChanged.connect(self.mostrar_usuarios)
 
-        
         self.button_check.clicked.connect(lambda: self.check_all_items())
         self.button_uncheck.clicked.connect(lambda: self.uncheck_all_items())
 
@@ -53,7 +52,8 @@ class EDIT_EVENT(QMainWindow):
         self.label_usuario.setText(self.evento[8])
         self.label_fecha.setText(self.evento[4])
         self.line_descripcion.setPlainText(self.evento[2])
-        self.line_archivos.setText(self.evento[3])
+        self.line_descripcion_empresa.setPlainText(self.evento[7])
+        # self.line_archivos.setText(self.evento[3])
         self.encargados = ast.literal_eval(self.evento[10])
         try:
             for encargado in self.encargados:
@@ -165,8 +165,11 @@ class EDIT_EVENT(QMainWindow):
         else:
             estado_nuevo = self.evento[11]
 
+        descripcion_empresa_nueva = self.line_descripcion_empresa.toPlainText()
+
         data = [str(self.evento[4]), str(self.evento[1]), str(self.line_descripcion.toPlainText()), 
-            str(descripcion_nueva), str(self.evento[9]), str(fecha_nueva), str(self.evento[10]), str(estado_nuevo)]
+            str(descripcion_nueva), str(descripcion_empresa_nueva),str(self.evento[9]),
+            str(fecha_nueva), str(self.evento[10]), str(estado_nuevo)]
         
         self.claseSQLite.modificar_evento_user(self.tabla_seleccionada, *data)
 
@@ -218,8 +221,10 @@ class EDIT_EVENT(QMainWindow):
         
         lista_encargados_nuevos = self.get_checked_items(self.treeWidget)
 
+        descripcion_empresa_nueva = self.line_descripcion_empresa.toPlainText()
+
         data = [str(self.evento[4]), str(self.evento[1]), data_empresa, str(self.line_descripcion.toPlainText()), 
-            str(descripcion_nueva), str(self.evento[9]), str(fecha_nueva), str(self.evento[10]),
+            str(descripcion_nueva), str(descripcion_empresa_nueva), str(self.evento[9]), str(fecha_nueva), str(self.evento[10]),
             str(lista_encargados_nuevos), str(self.evento[11]), str(estado_nuevo)]
 
         self.claseSQLite.modificar_evento_admin(self.tabla_seleccionada, *data)

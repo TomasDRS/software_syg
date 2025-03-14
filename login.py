@@ -13,7 +13,7 @@ class LOGIN(QMainWindow):
         super(LOGIN, self).__init__(parent)
         uic.loadUi("gui\gui_login.ui", self)  # Cargar la interfaz de Qt Designer
 
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
         self.setWindowTitle("Iniciar sesión")
         self.cargar_usuarios()
         self.line_password.returnPressed.connect(self.iniciar_sesion)

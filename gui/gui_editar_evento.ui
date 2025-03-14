@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>592</width>
-    <height>753</height>
+    <width>598</width>
+    <height>767</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -589,34 +589,6 @@ QToolBox::tab:selected {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="3" column="0">
-        <widget class="QPushButton" name="button_edit">
-         <property name="minimumSize">
-          <size>
-           <width>263</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">
-	font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Actualizar</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1" colspan="2">
-        <widget class="QPushButton" name="button_cancelar">
-         <property name="styleSheet">
-          <string notr="true">
-	font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Cancelar</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0" colspan="3">
         <widget class="QFrame" name="frame">
          <property name="styleSheet">
@@ -633,93 +605,7 @@ QToolBox::tab:selected {
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0" colspan="5">
-           <widget class="QFrame" name="frame_5">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_6">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="minimumSize">
-                <size>
-                 <width>82</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-               </property>
-               <property name="text">
-                <string>Creado por</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLabel" name="label_usuario">
-               <property name="minimumSize">
-                <size>
-                 <width>180</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="3">
-              <widget class="QLabel" name="label_fecha">
-               <property name="minimumSize">
-                <size>
-                 <width>110</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="label_10">
-               <property name="styleSheet">
-                <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-               </property>
-               <property name="text">
-                <string>el día</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="14" column="0" colspan="5">
+          <item row="14" column="0" colspan="4">
            <widget class="QFrame" name="frame_6">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -743,12 +629,12 @@ border-width:0px;</string>
                 <enum>Qt::RightToLeft</enum>
                </property>
                <property name="styleSheet">
-                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
+                <string notr="true">font: italic 12pt &quot;MS Shell Dlg 2&quot;;
 border-width:0px;
 padding-right: 130px;</string>
                </property>
                <property name="text">
-                <string>Finalizado                                   </string>
+                <string>Finalizado                                              </string>
                </property>
                <property name="tristate">
                 <bool>false</bool>
@@ -761,19 +647,19 @@ padding-right: 130px;</string>
                 <enum>Qt::RightToLeft</enum>
                </property>
                <property name="styleSheet">
-                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
+                <string notr="true">font: italic 12pt &quot;MS Shell Dlg 2&quot;;
 border-width:0px;
 padding-right: 130px;</string>
                </property>
                <property name="text">
-                <string>Finalizado interno                             </string>
+                <string>Finalizado interno                                       </string>
                </property>
               </widget>
              </item>
             </layout>
            </widget>
           </item>
-          <item row="3" column="2" colspan="3">
+          <item row="3" column="2" colspan="2">
            <widget class="QFrame" name="frame_3">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -782,6 +668,27 @@ padding-right: 130px;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="check_interno">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">
+	font: 12pt &quot;MS Shell Dlg 2&quot;;font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+               </property>
+               <property name="text">
+                <string>Interno</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0">
               <widget class="QComboBox" name="combo_empresa">
                <property name="enabled">
@@ -832,31 +739,63 @@ QComboBox:disabled {
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QCheckBox" name="check_interno">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">
-	font: 12pt &quot;MS Shell Dlg 2&quot;;font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-               </property>
-               <property name="text">
-                <string>Interno</string>
+             <item row="1" column="0" colspan="2">
+              <widget class="QTextEdit" name="line_descripcion_empresa">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>50</height>
+                </size>
                </property>
               </widget>
              </item>
             </layout>
            </widget>
           </item>
-          <item row="6" column="2" colspan="3">
+          <item row="5" column="0" colspan="2">
+           <widget class="QLabel" name="label_4">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Descripción</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QLabel" name="label_9">
+            <property name="maximumSize">
+             <size>
+              <width>1750</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Fechas anteriores</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2" colspan="2">
            <widget class="QTextEdit" name="line_actualizacion">
             <property name="styleSheet">
              <string notr="true">QTextEdit{
@@ -875,88 +814,7 @@ QTextEdit:hover {
             </property>
            </widget>
           </item>
-          <item row="5" column="2" colspan="3">
-           <widget class="QTextEdit" name="line_descripcion">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QTextEdit{
-	border-style:solid;
-	border-width:1px;
-	border-color:grey;
-	font: 10pt &quot;MS Shell Dlg 2&quot;;
-}
-
-QTextEdit:hover {
-	border-style:solid;
-	border-width:1px;
-	border-color:black;
-}
-</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="html">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="4">
-           <widget class="QPushButton" name="pushButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-	font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2" colspan="2">
-           <widget class="QLineEdit" name="line_archivos">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>265</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="2" colspan="3">
+          <item row="8" column="2" colspan="2">
            <widget class="QDateEdit" name="date_fecha">
             <property name="enabled">
              <bool>true</bool>
@@ -996,7 +854,7 @@ border-width:0px;</string>
            <widget class="QLabel" name="label_3">
             <property name="maximumSize">
              <size>
-              <width>175</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -1017,7 +875,7 @@ border-width:0px;</string>
            <widget class="QLabel" name="label_2">
             <property name="maximumSize">
              <size>
-              <width>175</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -1033,130 +891,7 @@ border-width:0px;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QLabel" name="label_4">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Descripción</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignHCenter|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QLabel" name="label_8">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Archivos</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QLabel" name="label_9">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Fechas anteriores</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0" colspan="2">
-           <widget class="QLabel" name="label_7">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Encargados</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0" colspan="2">
-           <widget class="QLabel" name="label">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string> Fecha de finalización </string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QLabel" name="label_6">
-            <property name="maximumSize">
-             <size>
-              <width>175</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border-width:0px;</string>
-            </property>
-            <property name="text">
-             <string>Sector</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="2" colspan="3">
+          <item row="7" column="2" colspan="2">
            <widget class="QComboBox" name="combo_fechas_anteriores">
             <property name="enabled">
              <bool>true</bool>
@@ -1179,128 +914,47 @@ QComboBox:hover {
             </property>
            </widget>
           </item>
-          <item row="12" column="2" colspan="3">
-           <widget class="QFrame" name="frame_4">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+          <item row="8" column="0" colspan="2">
+           <widget class="QLabel" name="label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_4">
-             <item row="1" column="1">
-              <widget class="QPushButton" name="button_check">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Seleccionar todos</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QPushButton" name="button_uncheck">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Deseleccionar todos</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" colspan="2">
-              <widget class="QComboBox" name="combo_encargado_sector">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">
-QComboBox{
-	border-style:solid;
-	border-width:1px;
-	border-color:grey;
-	font: 13pt &quot;MS Shell Dlg 2&quot;;
-}
-
-QComboBox:hover {
-	border-style:solid;
-	border-width:1px;
-	border-color:black;
-}
-</string>
-               </property>
-               <property name="currentIndex">
-                <number>-1</number>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>16</width>
-                 <height>16</height>
-                </size>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Comex</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>../etc/logo_comex.png</normaloff>../etc/logo_comex.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>MGM</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>../etc/logo_mgm.png</normaloff>../etc/logo_mgm.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Administración</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>../etc/logo_admin.png</normaloff>../etc/logo_admin.png</iconset>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QTreeWidget" name="treeWidget">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>50</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>280</width>
-                 <height>100</height>
-                </size>
-               </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="headerHidden">
-                <bool>false</bool>
-               </property>
-               <column>
-                <property name="text">
-                 <string>Encargados</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-            </layout>
+            <property name="text">
+             <string> Fecha de finalización </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
-          <item row="1" column="2" colspan="3">
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="label_6">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Sector</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" colspan="2">
            <widget class="QComboBox" name="combo_sector">
             <property name="enabled">
              <bool>false</bool>
@@ -1461,7 +1115,318 @@ QComboBox:hover {
             </item>
            </widget>
           </item>
+          <item row="12" column="0" colspan="2">
+           <widget class="QLabel" name="label_7">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+            </property>
+            <property name="text">
+             <string>Encargados</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="2" colspan="2">
+           <widget class="QFrame" name="frame_4">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="1" column="2">
+              <widget class="QPushButton" name="button_uncheck">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>125</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Deseleccionar todos</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QPushButton" name="button_check">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>125</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Seleccionar todos</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="2">
+              <widget class="QComboBox" name="combo_encargado_sector">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">
+QComboBox{
+	border-style:solid;
+	border-width:1px;
+	border-color:grey;
+	font: 13pt &quot;MS Shell Dlg 2&quot;;
+}
+
+QComboBox:hover {
+	border-style:solid;
+	border-width:1px;
+	border-color:black;
+}
+</string>
+               </property>
+               <property name="currentIndex">
+                <number>-1</number>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Comex</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>../etc/logo_comex.png</normaloff>../etc/logo_comex.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>MGM</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>../etc/logo_mgm.png</normaloff>../etc/logo_mgm.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Administración</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>../etc/logo_admin.png</normaloff>../etc/logo_admin.png</iconset>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QTreeWidget" name="treeWidget">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>50</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>250</width>
+                 <height>100</height>
+                </size>
+               </property>
+               <property name="alternatingRowColors">
+                <bool>true</bool>
+               </property>
+               <property name="headerHidden">
+                <bool>false</bool>
+               </property>
+               <column>
+                <property name="text">
+                 <string>Encargados</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="5" column="2" colspan="2">
+           <widget class="QTextEdit" name="line_descripcion">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QTextEdit{
+	border-style:solid;
+	border-width:1px;
+	border-color:grey;
+	font: 10pt &quot;MS Shell Dlg 2&quot;;
+}
+
+QTextEdit:hover {
+	border-style:solid;
+	border-width:1px;
+	border-color:black;
+}
+</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="html">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="4">
+           <widget class="QFrame" name="frame_5">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+               </property>
+               <property name="text">
+                <string>Creado por</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_usuario">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLabel" name="label_fecha">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: italic 14pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_10">
+               <property name="styleSheet">
+                <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-width:0px;</string>
+               </property>
+               <property name="text">
+                <string>el día</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="2">
+        <widget class="QPushButton" name="button_cancelar">
+         <property name="styleSheet">
+          <string notr="true">
+	font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Cancelar</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="button_edit">
+         <property name="minimumSize">
+          <size>
+           <width>263</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+	font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Actualizar</string>
+         </property>
         </widget>
        </item>
       </layout>

@@ -17,7 +17,7 @@ class UI(QMainWindow):
         uic.loadUi(r"gui\gui.ui", self)  # Cargar la interfaz de Qt Designer
         
         self.user = user
-        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
+        self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db_test.db")
         self.ventana_agregar_evento = ADD_EVENT(user)
         # self.ventana_agregar_empresa = ADD_COMPANY()
 
@@ -28,7 +28,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.0.10 test build")
+        self.action_version.setText("Versión 1.0.10.1 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
