@@ -118,7 +118,7 @@ class ADD_EVENT(QMainWindow):
     def crear_evento(self):
         fecha_carga = datetime.now().strftime("%Y/%m/%d")
         hora_carga = datetime.now().strftime("%H:%M:%S")
-        
+
         lista_encargados = self.get_checked_items(self.treeWidget)
         lista_encargados = "[" + ", ".join(f'"{item}"' for item in lista_encargados) + "]"
 
@@ -130,10 +130,12 @@ class ADD_EVENT(QMainWindow):
                             8: "events_mgm_comercial", 9: "events_mgm_gestion", 10: "events_mgm_ingenieria", 11: "events_mgm_laboratorio", 
                             12: "events_mgm_producto", 13: "events_admin_administracion"}
         fecha = self.date_fecha.date().toString("yyyy/MM/dd")
-        data_fecha = f"""["{fecha}", "{self.user}"]"""
+        data_fecha = f"""[["{fecha}", "{self.user}"]]"""
+        estado = [['0', fecha_carga, str(self.user)], ['0', fecha_carga, str(self.user)]]
 
+        descripcion_empresa = str(fecha_carga) + " - " + str(self.user) + "\n" + self.line_descripcion_empresa.toPlainText()
         data = [data_empresa, descripcion, self.line_archivos.text(), fecha_carga, hora_carga,
-                "", "", self.user, data_fecha, lista_encargados, 0]
+                "", descripcion_empresa, self.user, data_fecha, lista_encargados, str(estado)]
         
         sector = self.combo_sector.currentIndex()
         if sector in sector_table_map:
