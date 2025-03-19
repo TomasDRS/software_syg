@@ -17,7 +17,8 @@ class ADD_EVENT(QMainWindow):
         self.setWindowTitle("Agregar Evento")
         self.combo_empresa.setEditable(True)
         self.combo_empresa.setCurrentText("Seleccionar empresa")
-        self.button_crear.clicked.connect(self.crear_evento)
+        # self.button_crear.clicked.connect(self.crear_evento)
+        self.button_crear.clicked.connect(self.check_datos)
         self.button_cancelar.clicked.connect(self.close)
         self.check_interno.stateChanged.connect(self.check_interno_changed)
         self.combo_encargado_sector.currentIndexChanged.connect(self.mostrar_usuarios)
@@ -27,11 +28,19 @@ class ADD_EVENT(QMainWindow):
         
         sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(user)[4])
         self.determinar_sectores(sectores)
+    
+        # Establecer la fecha actual
+        self.date_fecha.setDate(QDate.currentDate())
 
         self.msg_creado = QMessageBox()
         self.msg_creado.setIcon(QMessageBox.Information)
         self.msg_creado.setText("Se ha creado el evento.")
         self.msg_creado.setWindowTitle("Evento creado.")
+
+        self.msg_faltan_datos = QMessageBox()
+        self.msg_faltan_datos.setIcon(QMessageBox.Warning)
+        self.msg_faltan_datos.setText("¡Faltan datos para crear el evento!")
+        self.msg_faltan_datos.setWindowTitle("Faltan datos.")
 
     def determinar_sectores(self, lista_sectores):
         sectores_index = {"syg_comex": 0, "syg_gestion": 1, "syg_ingenieria": 2, "syg_laboratorio": 3, "syg_visitas_ingenieria": 4,
@@ -116,6 +125,9 @@ class ADD_EVENT(QMainWindow):
             check_item(self.treeWidget.topLevelItem(i))
 
     def crear_evento(self):
+        
+        self.button_crear.setEnabled(False)
+        
         fecha_carga = datetime.now().strftime("%Y/%m/%d")
         hora_carga = datetime.now().strftime("%H:%M:%S")
 
@@ -136,12 +148,13 @@ class ADD_EVENT(QMainWindow):
         descripcion_empresa = str(fecha_carga) + " - " + str(self.user) + "\n" + self.line_descripcion_empresa.toPlainText()
         data = [data_empresa, descripcion, self.line_archivos.text(), fecha_carga, hora_carga,
                 "", descripcion_empresa, self.user, data_fecha, lista_encargados, str(estado)]
-        
         sector = self.combo_sector.currentIndex()
         if sector in sector_table_map:
             self.claseSQLite.crear_evento(sector_table_map[sector], *data)
 
         self.msg_creado.exec_()
+
+        self.button_crear.setEnabled(True)
 
     def check_interno_changed(self):
         if self.check_interno.isChecked():
@@ -149,3 +162,18 @@ class ADD_EVENT(QMainWindow):
         else:
             self.combo_empresa.setEnabled(True)
 
+    def check_datos(self):
+        datos_completados = [0, 0, 0, 0]
+        if self.combo_sector.currentIndex() != -1:
+            datos_completados[0] = 1
+        if self.combo_empresa.currentText() != '' or self.check_interno.isChecked():
+            datos_completados[1] = 1
+        if self.line_descripcion.toPlainText() != '':
+            datos_completados[2] = 1
+        if self.get_checked_items(self.treeWidget) != []:
+            datos_completados[3] = 1
+        
+        if datos_completados[0] == 1 and datos_completados[1] == 1 and datos_completados[2] == 1 and datos_completados[3] == 1:
+            self.crear_evento()
+        else:
+            self.msg_faltan_datos.exec_()

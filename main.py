@@ -28,7 +28,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.0.10.2 test build")
+        self.action_version.setText("Versión 1.1.1 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
@@ -184,7 +184,7 @@ class UI(QMainWindow):
             tabla_widget = data[1]
             
             # Save the selected row
-            selected_row = tabla_widget.currentRow()
+            selected_row = tabla_widget.currentRow() 
             
             self.mostrar_eventos_tabla(*data)
             
