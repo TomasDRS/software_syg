@@ -24,7 +24,7 @@ class EDIT_EVENT(QMainWindow):
             self.desbloquear_admin()
             self.button_edit.clicked.connect(self.editar_evento_admin)
         else:
-            self.button_edit.clicked.connect(self.editar_evento_user)
+            self.button_edit.clicked.connect(self.check_datos_user)
         self.button_cancelar.clicked.connect(self.close)
         self.check_interno.stateChanged.connect(self.check_interno_changed)
         self.combo_encargado_sector.currentIndexChanged.connect(self.mostrar_usuarios)
@@ -32,7 +32,6 @@ class EDIT_EVENT(QMainWindow):
         self.button_check.clicked.connect(lambda: self.check_all_items())
         self.button_uncheck.clicked.connect(lambda: self.uncheck_all_items())
 
-        self.date_fecha.dateChanged.connect(lambda: setattr(self, 'flag_fecha', True))
         self.check_finalizado_interno.clicked.connect(lambda: setattr(self, 'flag_estado_interno', True))
         self.check_finalizado.clicked.connect(lambda: setattr(self, 'flag_estado_admin', True))
         # sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(user)[4])
@@ -43,6 +42,11 @@ class EDIT_EVENT(QMainWindow):
         self.msg_modificado.setIcon(QMessageBox.Information)
         self.msg_modificado.setText("Se ha modificado el evento.")
         self.msg_modificado.setWindowTitle("Evento modificado.")
+
+        self.msg_faltan_datos = QMessageBox()
+        self.msg_faltan_datos.setIcon(QMessageBox.Warning)
+        self.msg_faltan_datos.setText("¡No se ha modificado ningún dato!")
+        self.msg_faltan_datos.setWindowTitle("No se modificaron datos.")
 
     def mostrar_evento(self):
         sectores_index = {"syg_comex": 0, "syg_gestion": 1, "syg_ingenieria": 2, "syg_laboratorio": 3, "syg_visitas_ingenieria": 4,
@@ -68,6 +72,8 @@ class EDIT_EVENT(QMainWindow):
             self.combo_fechas_anteriores.addItems([fecha[1] + " - " + fecha[0]])
         
         self.date_fecha.setDate(QDate.fromString(lista_fechas_anteriores[-1][0], "yyyy/MM/dd"))
+        
+        self.date_fecha.dateChanged.connect(lambda: setattr(self, 'flag_fecha', True))
 
         self.check_finalizado_interno.setChecked(info_estado[0][0][0] == "1")
         self.check_finalizado.setChecked(info_estado[0][1][0] == "1")
@@ -151,7 +157,7 @@ class EDIT_EVENT(QMainWindow):
             fecha_nueva = fechas_viejas
         else:
             fecha_nueva = self.evento[9]
-        
+
         if self.flag_estado_interno:
             if self.check_finalizado_interno.isChecked():
                 estado_encargado = "1"
@@ -270,10 +276,15 @@ class EDIT_EVENT(QMainWindow):
             check_item(self.treeWidget.topLevelItem(i))
 
     def desbloquear_admin(self):
-        self.combo_empresa.setEnabled(True)
-        self.line_descripcion.setEnabled(True)
-        self.treeWidget.setEnabled(True)
-        self.combo_encargado_sector.setEnabled(True)
-        self.button_check.setEnabled(True)
-        self.button_uncheck.setEnabled(True)
-        self.check_finalizado.setEnabled(True)
+        widgets_to_enable = [self.combo_empresa, self.line_descripcion, self.treeWidget,
+                             self.combo_encargado_sector, self.button_check, self.button_uncheck,
+                             self.check_finalizado]
+
+        for widget in widgets_to_enable:
+            widget.setEnabled(True)
+
+    def check_datos_user(self):
+        if self.line_actualizacion.toPlainText() != '' or self.flag_fecha == True or self.flag_estado_interno == True:
+            self.editar_evento_user()
+        else:
+            self.msg_faltan_datos.exec_()
