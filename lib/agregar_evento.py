@@ -153,7 +153,7 @@ class ADD_EVENT(QMainWindow):
             self.claseSQLite.crear_evento(sector_table_map[sector], *data)
 
         self.msg_creado.exec_()
-
+        self.limpiar_datos()
         self.button_crear.setEnabled(True)
 
     def check_interno_changed(self):
@@ -177,3 +177,14 @@ class ADD_EVENT(QMainWindow):
             self.crear_evento()
         else:
             self.msg_faltan_datos.exec_()
+
+    def limpiar_datos(self):
+        self.combo_sector.setCurrentIndex(-1)
+        self.combo_empresa.setCurrentIndex(-1)
+        self.check_interno.setChecked(False)
+        self.line_descripcion_empresa.setText('')
+        self.line_descripcion.setText('')
+        self.line_archivos.setText('')
+        self.date_fecha.setDate(QDate.currentDate())
+        self.combo_encargado_sector.setCurrentIndex(-1)
+        self.treeWidget.clear()
