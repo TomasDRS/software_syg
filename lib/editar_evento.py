@@ -8,12 +8,13 @@ from datetime import datetime
 import ast
 
 class EDIT_EVENT(QMainWindow):
-    def __init__(self, user, tabla_seleccionada, evento, parent=None):
+    def __init__(self, user, callback, tabla_seleccionada, evento, parent=None):
         super(EDIT_EVENT, self).__init__(parent)
         uic.loadUi("gui\gui_editar_evento.ui", self)  # Cargar la interfaz de Qt Designer
 
         self.user = user
         self.evento = evento
+        self.callback = callback
         self.tabla_seleccionada = tabla_seleccionada
         self.flag_fecha = False
         self.flag_estado_interno = False
@@ -180,6 +181,8 @@ class EDIT_EVENT(QMainWindow):
         self.claseSQLite.modificar_evento_user(self.tabla_seleccionada, *data)
 
         self.msg_modificado.exec_()
+        
+        self.callback()
 
     def editar_evento_admin(self):
         fecha_actualizacion = datetime.now().strftime("%Y/%m/%d")

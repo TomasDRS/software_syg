@@ -8,10 +8,11 @@ from datetime import datetime
 import ast
 
 class ADD_EVENT(QMainWindow):
-    def __init__(self, user, parent=None):
+    def __init__(self, user, callback, parent=None):
         super(ADD_EVENT, self).__init__(parent)
         uic.loadUi("gui\gui_agregar_evento.ui", self)  # Cargar la interfaz de Qt Designer
 
+        self.callback = callback
         self.user = user
         self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
         self.setWindowTitle("Agregar Evento")
@@ -155,6 +156,7 @@ class ADD_EVENT(QMainWindow):
         self.msg_creado.exec_()
         self.limpiar_datos()
         self.button_crear.setEnabled(True)
+        self.callback()
 
     def check_interno_changed(self):
         if self.check_interno.isChecked():

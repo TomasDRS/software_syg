@@ -18,7 +18,7 @@ class UI(QMainWindow):
         
         self.user = user
         self.claseSQLite = SQLite(r"//192.168.10.5/syg/INGENIERIA/PRUEBA_SOFTWARE_MGM/db.db")
-        self.ventana_agregar_evento = ADD_EVENT(user)
+        self.ventana_agregar_evento = ADD_EVENT(user, self.refrescar_tabla)
         # self.ventana_agregar_empresa = ADD_COMPANY()
 
         self.msg_login = QMessageBox()
