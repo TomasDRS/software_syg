@@ -103,25 +103,26 @@ def download_and_extract():
             extract_path = os.path.join(INSTALL_PATH, "update")
             zip_ref.extractall(extract_path)
 
-        subfolder = os.path.join(extract_path, "software_syg-main")
+        subfolder = os.path.join(extract_path, "software_syg-main")  # Cambia este nombre si es diferente
 
         update_text("Copiando archivos...")
 
         if os.path.exists(subfolder):
+            # Mover archivos extraídos directamente al directorio de instalación
             for item in os.listdir(subfolder):
                 source_path = os.path.join(subfolder, item)
                 destination_path = os.path.join(INSTALL_PATH, item)
 
                 if os.path.exists(destination_path):
                     if os.path.isdir(destination_path):
-                        shutil.rmtree(destination_path)
+                        shutil.rmtree(destination_path)  # Eliminar directorios anteriores
                     else:
-                        os.remove(destination_path)
+                        os.remove(destination_path)  # Eliminar archivos anteriores
 
                 shutil.move(source_path, INSTALL_PATH)
 
-        os.remove(zip_path)
-        shutil.rmtree(extract_path)
+        os.remove(zip_path)  # Eliminar archivo ZIP descargado
+        shutil.rmtree(extract_path)  # Eliminar carpeta temporal
 
         update_text("Actualización completada.")
         time.sleep(2)
