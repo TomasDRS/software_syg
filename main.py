@@ -28,7 +28,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.1.4.1 test build")
+        self.action_version.setText("Versión 1.1.4.2 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
@@ -373,7 +373,7 @@ class UI(QMainWindow):
         encargado = datos_evento[3].text()
         fecha_evento = datos_evento[4].text()  
         evento = self.claseSQLite.buscar_evento_por_id(sector_table_map[tabla_seleccionada], datos_evento[0].text())
-        self.ventana_editar_evento = EDIT_EVENT(self.user, sector_table_map[tabla_seleccionada], evento[0])
+        self.ventana_editar_evento = EDIT_EVENT(self.user, self.refrescar_tabla, sector_table_map[tabla_seleccionada], evento[0])
         self.ventana_editar_evento.show()
 
     def buscar_evento(self, line_buscar):
