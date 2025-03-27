@@ -126,9 +126,9 @@ class ADD_EVENT(QMainWindow):
             check_item(self.treeWidget.topLevelItem(i))
 
     def crear_evento(self):
-        
+
         self.button_crear.setEnabled(False)
-        
+
         fecha_carga = datetime.now().strftime("%Y/%m/%d")
         hora_carga = datetime.now().strftime("%H:%M:%S")
 

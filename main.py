@@ -28,7 +28,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.1.2.1 test build")
+        self.action_version.setText("Versión 1.1.3 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
@@ -334,7 +334,7 @@ class UI(QMainWindow):
             diferencia = (fecha_obj - hoy).days
             if diferencia <= 7:
                 tabla_widget.item(tableindex, 6).setBackground(QColor(255, 0, 0, 100))
-            elif 7 < diferencia <= 14:
+            elif 7 < diferencia <= 14: 
                 tabla_widget.item(tableindex, 6).setBackground(QColor(255, 120, 0, 100))
             elif 14 < diferencia <= 21:
                 tabla_widget.item(tableindex, 6).setBackground(QColor(255, 255, 0, 100))
@@ -357,6 +357,7 @@ class UI(QMainWindow):
             tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
 
     def llamar_editar_evento(self, tabla_seleccionada):
+
         """Abre la ventana de edición de eventos."""
         sector_table_map = {self.tabla_eventos_syg_comex: "events_syg_comex", self.tabla_eventos_syg_gestion: "events_syg_gestion", 
                     self.tabla_eventos_syg_ingenieria: "events_syg_ingenieria", self.tabla_eventos_syg_laboratorio: "events_syg_laboratorio",
