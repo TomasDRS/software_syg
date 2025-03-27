@@ -6,7 +6,7 @@ import shutil
 import time
 
 # URLS donde están alojados los archivos de actualización
-VERSION_URL = "https://raw.githubusercontent.com/TomasDRS/software_syg/refs/heads/main/version.txt?token=GHSAT0AAAAAADAECDIP2DV7MSRJIAOG55TEZ7FMEBA"
+VERSION_URL = "https://raw.githubusercontent.com/TomasDRS/software_syg/refs/heads/main/version.txt"
 ZIP_URL = "https://github.com/usuario/repositorio/archive/refs/heads/main.zip"
 
 LOCAL_VERSION_FILE = "version.txt"
