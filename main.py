@@ -28,7 +28,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.1.3 test build")
+        self.action_version.setText("Versión 1.1.4 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 

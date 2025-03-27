@@ -7,7 +7,7 @@ import time
 
 # URLS donde están alojados los archivos de actualización
 VERSION_URL = "https://raw.githubusercontent.com/TomasDRS/software_syg/refs/heads/main/version.txt"
-ZIP_URL = "https://github.com/usuario/repositorio/archive/refs/heads/main.zip"
+ZIP_URL = "https://github.com/TomasDRS/software_syg/archive/refs/heads/main.zip"
 
 LOCAL_VERSION_FILE = "version.txt"
 INSTALL_PATH = os.path.dirname(os.path.abspath(__file__))  # Directorio del programa
@@ -43,24 +43,28 @@ def download_and_extract():
                 f.write(chunk)
 
         print("Descomprimiendo archivos...")
-
+        
         # Extraer archivos
         with zipfile.ZipFile(zip_path, "r") as zip_ref:
             extract_path = os.path.join(INSTALL_PATH, "update")
             zip_ref.extractall(extract_path)
 
+        # Buscar la carpeta interna (GitHub ZIP siempre agrega "-main")
+        subfolder = os.path.join(extract_path, "software_syg-main")
+
         # Mover archivos de actualización a la carpeta principal
-        for item in os.listdir(extract_path):
-            source_path = os.path.join(extract_path, item)
-            destination_path = os.path.join(INSTALL_PATH, item)
+        if os.path.exists(subfolder):
+            for item in os.listdir(subfolder):
+                source_path = os.path.join(subfolder, item)
+                destination_path = os.path.join(INSTALL_PATH, item)
 
-            if os.path.exists(destination_path):
-                if os.path.isdir(destination_path):
-                    shutil.rmtree(destination_path)  # Elimina carpetas antiguas
-                else:
-                    os.remove(destination_path)  # Borra archivos antiguos
+                if os.path.exists(destination_path):
+                    if os.path.isdir(destination_path):
+                        shutil.rmtree(destination_path)  # Elimina carpetas antiguas
+                    else:
+                        os.remove(destination_path)  # Borra archivos antiguos
 
-            shutil.move(source_path, INSTALL_PATH)
+                shutil.move(source_path, INSTALL_PATH)
 
         # Eliminar archivos temporales
         os.remove(zip_path)
