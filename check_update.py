@@ -148,6 +148,7 @@ def check_for_updates():
         print("Nueva versión encontrada. Iniciando actualización...")
 
         if download_and_extract():
+            # Actualizar el archivo version.txt
             with open(LOCAL_VERSION_FILE, "w") as f:
                 f.write(remote_version)
 
