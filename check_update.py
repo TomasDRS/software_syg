@@ -8,17 +8,14 @@ import threading
 import tkinter as tk
 from tkinter import ttk
 
-# Detectar si estamos ejecutando como .exe
-if getattr(sys, 'frozen', False):
-    INSTALL_PATH = os.path.dirname(sys.executable)  # Para .exe
-else:
-    INSTALL_PATH = os.path.dirname(os.path.abspath(__file__))  # Para script .py
-
+# URLS donde están alojados los archivos de actualización
 VERSION_URL = "https://raw.githubusercontent.com/TomasDRS/software_syg/refs/heads/main/version.txt"
 ZIP_URL = "https://github.com/TomasDRS/software_syg/archive/refs/heads/main.zip"
-LOCAL_VERSION_FILE = os.path.join(INSTALL_PATH, "version.txt")
 
-# GUI de actualización
+LOCAL_VERSION_FILE = "version.txt"
+INSTALL_PATH = os.path.dirname(os.path.abspath(__file__))  # Directorio del programa
+
+# Crear ventana de actualización
 def show_update_window():
     global update_label, update_window, progress_bar, progress_percent
     update_window = tk.Tk()
@@ -40,20 +37,24 @@ def show_update_window():
     update_window.update()
 
 def update_text(new_text):
+    """Actualiza el texto de la ventana"""
     update_label.config(text=new_text)
     update_window.update()
 
 def update_progress(value, total_size):
-    if total_size > 0:
+    """Actualiza la barra de progreso de forma segura"""
+    if total_size > 0:  # Evitar división por cero
         percent = int((value / total_size) * 100)
         progress_bar["value"] = percent
         progress_percent.config(text=f"{percent}%")
     else:
-        progress_bar.config(mode="indeterminate")
-        progress_bar.start(10)
+        progress_bar.config(mode="indeterminate")  # Cambia a modo indeterminado si no hay tamaño
+        progress_bar.start(10)  # Animación de progreso indefinida
+
     update_window.update()
 
 def get_remote_version():
+    """Obtiene la versión más reciente disponible en el servidor."""
     try:
         response = requests.get(VERSION_URL)
         response.raise_for_status()
@@ -63,20 +64,22 @@ def get_remote_version():
         return None
 
 def get_local_version():
+    """Lee la versión instalada en la computadora."""
     if os.path.exists(LOCAL_VERSION_FILE):
         with open(LOCAL_VERSION_FILE, "r") as f:
             return f.read().strip()
     return "0.0.0"
 
 def download_and_extract():
-    show_update_window()
+    """Descarga la actualización y reemplaza los archivos automáticamente."""
+    show_update_window()  # Mostrar ventana de actualización
     update_text("Descargando actualización...")
 
     zip_path = os.path.join(INSTALL_PATH, "update.zip")
     try:
         response = requests.get(ZIP_URL, stream=True)
         response.raise_for_status()
-        total_size = int(response.headers.get("content-length", 0))
+        total_size = int(response.headers.get("content-length", 0))  # Obtener tamaño total del archivo
 
         if total_size == 0:
             print("⚠️ Advertencia: No se pudo obtener el tamaño del archivo. Se usará progreso indeterminado.")
@@ -87,57 +90,57 @@ def download_and_extract():
                 if chunk:
                     f.write(chunk)
                     downloaded_size += len(chunk)
-                    update_progress(downloaded_size, total_size)
+                    update_progress(downloaded_size, total_size)  # Actualizar barra de progreso
 
-        if not os.path.exists(zip_path) or os.path.getsize(zip_path) == 0:
-            print("Error: La descarga falló.")
-            return False
-
-        progress_bar.stop()
+        progress_bar.stop()  # Detener barra si estaba en modo indeterminado
         progress_bar.config(mode="determinate", value=100)
         progress_percent.config(text="100%")
 
         update_text("Descomprimiendo archivos...")
 
+        # Extraer archivos
         with zipfile.ZipFile(zip_path, "r") as zip_ref:
             extract_path = os.path.join(INSTALL_PATH, "update")
             zip_ref.extractall(extract_path)
 
-        subfolder = os.path.join(extract_path, "software_syg-main")  # Cambia este nombre si es diferente
+        # Buscar la carpeta interna (GitHub ZIP siempre agrega "-main")
+        subfolder = os.path.join(extract_path, "software_syg-main")
 
         update_text("Copiando archivos...")
 
+        # Mover archivos de actualización a la carpeta principal
         if os.path.exists(subfolder):
-            # Mover archivos extraídos directamente al directorio de instalación
             for item in os.listdir(subfolder):
                 source_path = os.path.join(subfolder, item)
                 destination_path = os.path.join(INSTALL_PATH, item)
 
                 if os.path.exists(destination_path):
                     if os.path.isdir(destination_path):
-                        shutil.rmtree(destination_path)  # Eliminar directorios anteriores
+                        shutil.rmtree(destination_path)  # Elimina carpetas antiguas
                     else:
-                        os.remove(destination_path)  # Eliminar archivos anteriores
+                        os.remove(destination_path)  # Borra archivos antiguos
 
                 shutil.move(source_path, INSTALL_PATH)
 
-        os.remove(zip_path)  # Eliminar archivo ZIP descargado
-        shutil.rmtree(extract_path)  # Eliminar carpeta temporal
+        # Eliminar archivos temporales
+        os.remove(zip_path)
+        shutil.rmtree(extract_path)
 
         update_text("Actualización completada.")
-        time.sleep(2)
-        update_window.destroy()
+        time.sleep(2)  # Espera un poco antes de cerrar la ventana
+        update_window.destroy()  # Cerrar ventana
 
         return True
 
     except Exception as e:
         print(f"Error durante la actualización: {e}")
         update_text(f"Error: {e}")
-        input("Presiona ENTER para salir...")  # Evita que la ventana se cierre inmediatamente
+        time.sleep(3)
         update_window.destroy()
         return False
 
 def check_for_updates():
+    """Verifica si hay una nueva versión y la instala sin intervención del usuario."""
     remote_version = get_remote_version()
     local_version = get_local_version()
 
@@ -148,20 +151,21 @@ def check_for_updates():
         print("Nueva versión encontrada. Iniciando actualización...")
 
         if download_and_extract():
-            # Actualizar el archivo version.txt
+            # Guardar la nueva versión en el archivo local
             with open(LOCAL_VERSION_FILE, "w") as f:
                 f.write(remote_version)
 
             print("Reiniciando el programa...")
-            time.sleep(2)
-            os.execv(sys.executable, [sys.executable] + sys.argv)
+            time.sleep(2)  # Espera un poco para evitar errores al cerrar archivos
+            os.execv(sys.executable, [sys.executable] + sys.argv)  # Reinicia el programa
     else:
         print("El programa ya está actualizado.")
 
 if __name__ == "__main__":
+    # Ejecutar el chequeo de actualizaciones en un hilo separado para evitar congelar la ventana
     thread = threading.Thread(target=check_for_updates)
     thread.start()
-    thread.join()
+    thread.join()  # Espera a que termine la actualización
 
     print("Iniciando programa principal...")
-    import login
+    import login  # Aquí se ejecuta el programa después de la actualización
