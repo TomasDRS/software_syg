@@ -28,7 +28,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.1.4.3.2 test build")
+        self.action_version.setText("Versión 1.1.5 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
@@ -75,19 +75,30 @@ class UI(QMainWindow):
 
         for tabla in tablas_eventos:
             tabla.doubleClicked.connect(lambda _, t=tabla: self.llamar_editar_evento(t))
-
+        
         self.desbloquear_tabs()
+
+        if self.user == "German Roldan" or self.user == "Matias Roldan":
+            self.desbloquear_admin()
+            self.mostrar_eventos_tabla_admin("todo", self.tabla_eventos_todo_admin)
+            self.mostrar_eventos_tabla_admin("syg", self.tabla_eventos_syg_admin)
+            self.mostrar_eventos_tabla_admin("mgm", self.tabla_eventos_mgm_admin)
+
         # self.action_agregar_empresa.triggered.connect(self.ventana_agregar_empresa.show)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.refrescar_tabla)
         self.timer.start(60000)  # refresca las tablas cada 15 segundos
 
+    def desbloquear_admin(self):
+        self.tabWidget_2.setTabEnabled(2, True)
+
     def desbloquear_tabs(self):
         sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(self.user)[4])
         """Desbloquea las tabs según los sectores del usuario."""
         [self.tabWidget.setTabEnabled(i, False) for i in range(6, -1, -1)]
-        [self.tabWidget_2.setTabEnabled(i, False) for i in range(1, -1, -1)]
+        [self.tabWidget_2.setTabEnabled(i, False) for i in range(2, -1, -1)]
         [self.tabWidget_3.setTabEnabled(i, False) for i in range(7, -1, -1)]
+
         # Diccionario que mapea los sectores a los índices de las pestañas
         sectores_map = {"mgm_producto": (1, 6), "mgm_laboratorio": (1, 5), "mgm_ingenieria": (1, 4),
                         "mgm_gestion": (1, 3), "mgm_comercial": (1, 2), "mgm_calidad": (1, 1),
@@ -194,10 +205,28 @@ class UI(QMainWindow):
         print("[INFO] Tablas refrescadas.")
 
     def mostrar_eventos_tabla(self, tabla_db, tabla_widget):
+        def ordenar_por_ultima_fecha(lista):
+            """ Ordena la lista en base a la última fecha agregada en la casilla 9 """
+            
+            def get_last_added_date(entry):
+                """ Extrae la última fecha agregada de la casilla 9 """
+                try:
+                    dates_list = ast.literal_eval(entry[9])  # Convierte el string en lista de listas
+                    last_added_date = dates_list[-1][0]  # Toma la fecha del último elemento
+                    return last_added_date
+                except (ValueError, SyntaxError, IndexError):
+                    return "1900/01/01"  # En caso de error, usa una fecha muy antigua
+
+            # Ordena la lista por la última fecha agregada en orden descendente
+            return sorted(lista, key=get_last_added_date, reverse=False)
+        
         """Muestra los eventos en la tabla."""
 
         self.eventos = self.claseSQLite.leer_eventos(tabla_db)
-        # self.eventos.sort(key=lambda x: (x[7], x[10]))
+        
+        self.eventos = ordenar_por_ultima_fecha(self.eventos)
+        # self.eventos.sort(key=lambda x: (x[9]))
+        
         tabla_widget.clear()
 
         tabla_widget.horizontalHeader().setVisible(True)
@@ -274,6 +303,111 @@ class UI(QMainWindow):
         # Aplicar los modos en un bucle
         for col, mode in resize_modes.items():
             tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
+
+    def mostrar_eventos_tabla_admin(self, tabla, tabla_widget):
+        """Muestra los eventos en la tabla."""
+        tablas_por_sectores = {'syg': [["events_syg_comex", "Eventos SYG Comex"], ["events_syg_gestion", "Eventos SYG Gestión"], 
+                                    ["events_syg_ingenieria", "Eventos SYG Ingeniería"], ["events_syg_laboratorio", "Eventos SYG Laboratorio"],
+                                    ["visitas_syg_ingenieria", "Visitas SYG Ingeniería"], ["events_syg_producto", "Eventos SYG Producto"]],
+                                'mgm': [["events_mgm_academia", "Eventos MGM Academia"], ["events_mgm_calidad", "Eventos MGM Calidad"], 
+                                    ["events_mgm_comercial", "Eventos MGM Comercial"], ["events_mgm_gestion", "Eventos MGM Gestión"], 
+                                    ["events_mgm_ingenieria", "Eventos MGM Ingeniería"], ["events_mgm_laboratorio", "Eventos MGM Laboratorio"], 
+                                    ["events_mgm_producto", "Eventos MGM Producto"]],
+                                'todo': [["events_syg_comex", "Eventos SYG Comex"], ["events_syg_gestion", "Eventos SYG Gestión"],
+                                    ["events_syg_ingenieria", "Eventos SYG Ingeniería"], ["events_syg_laboratorio", "Eventos SYG Laboratorio"],
+                                    ["visitas_syg_ingenieria", "Visitas SYG Ingeniería"], ["events_syg_producto", "Eventos SYG Producto"],
+                                    ["events_mgm_academia", "Eventos MGM Academia"], ["events_mgm_calidad", "Eventos MGM Calidad"], 
+                                    ["events_mgm_comercial", "Eventos MGM Comercial"], ["events_mgm_gestion", "Eventos MGM Gestión"], 
+                                    ["events_mgm_ingenieria", "Eventos MGM Ingeniería"], ["events_mgm_laboratorio", "Eventos MGM Laboratorio"], 
+                                    ["events_mgm_producto", "Eventos MGM Producto"]]}
+
+        tabla_widget.clear()
+        tableindex = 0
+        tabla_widget.setRowCount(sum(len(self.claseSQLite.leer_eventos(tabla[0])) for tabla in tablas_por_sectores[tabla]))
+
+        for tabla_info in tablas_por_sectores[tabla]:
+            self.eventos = self.claseSQLite.leer_eventos(tabla_info[0])
+            # self.eventos.sort(key=lambda x: (x[7], x[10]))
+
+            tabla_widget.horizontalHeader().setVisible(True)
+            tabla_widget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+            tabla_widget.setColumnCount(10)
+
+            column_width = [100, 30, 100, 100, 200, 500, 180, 120, 120, 120]
+            headers = ["Tabla", "id", "Fecha Carga", "Empresa", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
+            for i, header in enumerate(headers):
+                tabla_widget.setColumnWidth(i, column_width[i])
+            tabla_widget.setHorizontalHeaderLabels(headers)
+            if self.eventos:
+                for etc, row in enumerate(self.eventos):
+                    lista_finalizado = ast.literal_eval(row[11])  # Convierte la cadena en lista, ejemplo lista_finalizado = [["1", "2025/03/11", "Juan Doe"], ["0", "2025/03/11", "Juan Doe"]]
+
+                    # Desempaquetamos las listas internas
+                    finalizado_interno_num, fecha_interno, encargado_interno = lista_finalizado[0]
+                    finalizado_num, fecha, encargado = lista_finalizado[1]
+
+                    # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
+                    finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno}\n{encargado_interno}"
+                    finalizado = f"{finalizado_num}\n{fecha}\n{encargado}"
+
+                    lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
+                    encargados_formateado = "\n".join(lista_encargados)
+
+                    lista_fechas_limite = ast.literal_eval(row[9])
+                    ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
+                    # Formatear el string con salto de línea
+                    fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
+
+                    fmt = "%Y/%m/%d"  # Formato de la fecha
+                    hoy = datetime.today().date()
+                    fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
+
+                    for colindex, value in enumerate([tabla_info[1], row[0], row[4], row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
+                        try:                            
+                            item = QtWidgets.QTableWidgetItem(str(value))  # Crear el item
+                            tabla_widget.setItem(tableindex, colindex, item)  # Asignarlo a la tabla
+                            
+                            if item is not None:  # Verificar que el item no es None
+                                item.setTextAlignment(Qt.AlignCenter)
+                            else:
+                                print(f"[WARNING] No se pudo agregar el item en ({tableindex}, {colindex})")
+                        
+                        except Exception as e:
+                            print("[ERROR] Error al agregar item o no existen items: ", e)
+                            
+                    num_saltos = row[2].count("\n")
+                    tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
+
+                    colors = {"0": QColor(255, 0, 0, 100),
+                            "1": QColor(0, 255, 0, 100),}
+                    
+                    # Calcular la diferencia en días
+                    diferencia = (fecha_obj - hoy).days
+                    if diferencia <= 7:
+                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 0, 0, 100))
+                    elif 7 < diferencia <= 14:
+                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 120, 0, 100))
+                    elif 14 < diferencia <= 21:
+                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 255, 0, 100))
+                    elif diferencia > 21:
+                        tabla_widget.item(tableindex, 7).setBackground(QColor(0, 255, 0, 100))
+
+                    if finalizado_interno_num in colors:
+                        tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_interno_num])
+                    if finalizado_num in colors:
+                        tabla_widget.item(tableindex, 9).setBackground(colors[finalizado_num])
+                        
+                    tableindex += 1
+
+            # Diccionario con los índices de columna y sus modos de ajuste
+            resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
+                        2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Interactive,
+                        4: QHeaderView.ResizeMode.Stretch, 5: QHeaderView.ResizeMode.Interactive,            
+                        6: QHeaderView.ResizeMode.Interactive, 7: QHeaderView.ResizeMode.Fixed, 
+                        8: QHeaderView.ResizeMode.Fixed}
+            # Aplicar los modos en un bucle
+            for col, mode in resize_modes.items():
+                tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
 
     def mostrar_eventos_especificos(self, tabla_widget, eventos):   
         """Muestra los eventos en la tabla."""
