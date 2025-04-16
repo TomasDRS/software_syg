@@ -45,8 +45,9 @@ class ADD_EVENT(QMainWindow):
 
     def determinar_sectores(self, lista_sectores):
         sectores_index = {"syg_comex": 0, "syg_gestion": 1, "syg_ingenieria": 2, "syg_laboratorio": 3, "syg_visitas_ingenieria": 4,
-                        "syg_producto": 5, "mgm_academia": 6, "mgm_calidad": 7, "mgm_comercial": 8, "mgm_gestion": 9, 
-                        "mgm_ingenieria": 10, "mgm_laboratorio": 11, "mgm_producto": 12, "admin_administracion": 13}
+                          "syg_calibraciones_ingenieria": 5, "syg_producto": 6, "mgm_academia": 7, "mgm_calidad": 8, 
+                          "mgm_comercial": 9, "mgm_gestion": 10, "mgm_ingenieria": 11, "mgm_laboratorio": 12, "mgm_producto": 13,
+                          "admin_administracion": 14}
 
         # Desactivar todos los elementos en el combo_sector
         model = self.combo_sector.model()
@@ -139,9 +140,9 @@ class ADD_EVENT(QMainWindow):
 
         data_empresa = "Interno" if self.check_interno.isChecked() else self.combo_empresa.currentText()
         sector_table_map = {0: "events_syg_comex", 1: "events_syg_gestion", 2: "events_syg_ingenieria", 3: "events_syg_laboratorio",
-                            4: "visitas_syg_ingenieria", 5: "events_syg_producto", 6: "events_mgm_academia", 7: "events_mgm_calidad",
-                            8: "events_mgm_comercial", 9: "events_mgm_gestion", 10: "events_mgm_ingenieria", 11: "events_mgm_laboratorio", 
-                            12: "events_mgm_producto", 13: "events_admin_administracion"}
+                            4: "visitas_syg_ingenieria", 5: "calibraciones_syg_ingenieria", 6: "events_syg_producto", 7: "events_mgm_academia",
+                            8: "events_mgm_calidad", 9: "events_mgm_comercial", 10: "events_mgm_gestion", 11: "events_mgm_ingenieria", 
+                            12: "events_mgm_laboratorio", 13: "events_mgm_producto", 14: "events_admin_administracion"}
         fecha = self.date_fecha.date().toString("yyyy/MM/dd")
         data_fecha = f"""[["{fecha}", "{self.user}"]]"""
         estado = [['0', fecha_carga, str(self.user)], ['0', fecha_carga, str(self.user)]]

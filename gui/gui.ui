@@ -1476,6 +1476,175 @@ QToolBox::tab:selected {
                </item>
               </layout>
              </widget>
+             <widget class="QWidget" name="tab_2">
+              <attribute name="title">
+               <string> Calibraciones Ingeniería </string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_23">
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="line_buscar_tabla_syg_calibraciones_ingenieria">
+                 <property name="styleSheet">
+                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Buscar . . .</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_agregar_syg_calibraciones_ingenieria">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="boton_eliminar_syg_calibraciones_ingenieria">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QPushButton" name="boton_refrescar_syg_calibraciones_ingenieria">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="4">
+                <widget class="QTableWidget" name="tabla_calibraciones_syg_ingenieria">
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                 <property name="verticalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOn</enum>
+                 </property>
+                 <property name="horizontalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOn</enum>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>false</bool>
+                 </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
+                 <property name="selectionBehavior">
+                  <enum>QAbstractItemView::SelectRows</enum>
+                 </property>
+                 <property name="gridStyle">
+                  <enum>Qt::SolidLine</enum>
+                 </property>
+                 <property name="cornerButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="rowCount">
+                  <number>5</number>
+                 </property>
+                 <attribute name="horizontalHeaderVisible">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="horizontalHeaderCascadingSectionResizes">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="horizontalHeaderDefaultSectionSize">
+                  <number>135</number>
+                 </attribute>
+                 <attribute name="horizontalHeaderMinimumSectionSize">
+                  <number>0</number>
+                 </attribute>
+                 <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderVisible">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>30</number>
+                 </attribute>
+                 <row/>
+                 <row/>
+                 <row/>
+                 <row/>
+                 <row/>
+                 <column>
+                  <property name="text">
+                   <string>Fecha Límite</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Hora Límite</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Prioridad</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Empresa</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Descripción</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Encargado</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Estado</string>
+                  </property>
+                 </column>
+                 <item row="1" column="0">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
              <widget class="QWidget" name="producto_tab">
               <attribute name="title">
                <string> Producto </string>
@@ -3652,6 +3821,7 @@ color: grey;
      <string> Empresas </string>
     </property>
     <addaction name="action_agregar_empresa"/>
+    <addaction name="action_ayuda"/>
     <addaction name="action_version"/>
    </widget>
    <addaction name="menuEmpresas"/>
@@ -3680,6 +3850,11 @@ color: grey;
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
+   </property>
+  </action>
+  <action name="action_ayuda">
+   <property name="text">
+    <string>Ayuda</string>
    </property>
   </action>
  </widget>

@@ -51,8 +51,9 @@ class EDIT_EVENT(QMainWindow):
 
     def mostrar_evento(self):
         sectores_index = {"syg_comex": 0, "syg_gestion": 1, "syg_ingenieria": 2, "syg_laboratorio": 3, "syg_visitas_ingenieria": 4,
-                          "syg_producto": 5, "mgm_academia": 6, "mgm_calidad": 7, "mgm_comercial": 8, "mgm_gestion": 9, 
-                          "mgm_ingenieria": 10, "mgm_laboratorio": 11, "mgm_producto": 12, "admin_administracion": 13}
+                          "syg_calibraciones_ingenieria": 5, "syg_producto": 6, "mgm_academia": 7, "mgm_calidad": 8, 
+                          "mgm_comercial": 9, "mgm_gestion": 10, "mgm_ingenieria": 11, "mgm_laboratorio": 12, "mgm_producto": 13,
+                          "admin_administracion": 14}
         self.combo_empresa.setCurrentText(self.evento[1])
         self.label_usuario.setText(self.evento[8])
         self.label_fecha.setText(self.evento[4])

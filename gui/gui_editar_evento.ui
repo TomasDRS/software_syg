@@ -1034,6 +1034,15 @@ QComboBox:hover {
             </item>
             <item>
              <property name="text">
+              <string>Calibraciones Ingenieria (SYG)</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../etc/logo_comex.png</normaloff>../etc/logo_comex.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>Producto (SYG)</string>
              </property>
              <property name="icon">

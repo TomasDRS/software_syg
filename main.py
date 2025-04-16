@@ -31,28 +31,28 @@ class UI(QMainWindow):
         self.action_version.setText("Versión 1.1.5 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
-                            self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_producto, 
-                            self.boton_agregar_mgm_academia, self.boton_agregar_mgm_calidad, self.boton_agregar_mgm_comercial, 
-                            self.boton_agregar_mgm_gestion, self.boton_agregar_mgm_ingenieria, self.boton_agregar_mgm_laboratorio, 
-                            self.boton_agregar_mgm_producto]
-        
+                            self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_calibraciones_ingenieria,
+                            self.boton_agregar_syg_producto, self.boton_agregar_mgm_academia, self.boton_agregar_mgm_calidad, 
+                            self.boton_agregar_mgm_comercial, self.boton_agregar_mgm_gestion, self.boton_agregar_mgm_ingenieria, 
+                            self.boton_agregar_mgm_laboratorio, self.boton_agregar_mgm_producto]
+
         botones_eliminar = [self.boton_eliminar_syg_comex, self.boton_eliminar_syg_gestion, self.boton_eliminar_syg_ingenieria,
-                            self.boton_eliminar_syg_laboratorio, self.boton_eliminar_syg_visitas_ingenieria, self.boton_eliminar_syg_producto, 
-                            self.boton_eliminar_mgm_academia, self.boton_eliminar_mgm_calidad, self.boton_eliminar_mgm_comercial, 
-                            self.boton_eliminar_mgm_gestion, self.boton_eliminar_mgm_ingenieria, self.boton_eliminar_mgm_laboratorio, 
-                            self.boton_eliminar_mgm_producto]
-        
+                            self.boton_eliminar_syg_laboratorio, self.boton_eliminar_syg_visitas_ingenieria, self.boton_eliminar_syg_calibraciones_ingenieria,
+                            self.boton_eliminar_syg_producto, self.boton_eliminar_mgm_academia, self.boton_eliminar_mgm_calidad,
+                            self.boton_eliminar_mgm_comercial, self.boton_eliminar_mgm_gestion, self.boton_eliminar_mgm_ingenieria, 
+                            self.boton_eliminar_mgm_laboratorio, self.boton_eliminar_mgm_producto]
+
         botones_refresh = [self.boton_refrescar_syg_comex, self.boton_refrescar_syg_gestion, self.boton_refrescar_syg_ingenieria,
-                            self.boton_refrescar_syg_laboratorio, self.boton_refrescar_syg_visitas_ingenieria, self.boton_refrescar_syg_producto, 
-                            self.boton_refrescar_mgm_academia, self.boton_refrescar_mgm_calidad, self.boton_refrescar_mgm_comercial, 
-                            self.boton_refrescar_mgm_gestion, self.boton_refrescar_mgm_ingenieria, self.boton_refrescar_mgm_laboratorio, 
-                            self.boton_refrescar_mgm_producto]
-        
+                            self.boton_refrescar_syg_laboratorio, self.boton_refrescar_syg_visitas_ingenieria, self.boton_refrescar_syg_calibraciones_ingenieria,
+                            self.boton_refrescar_syg_producto, self.boton_refrescar_mgm_academia, self.boton_refrescar_mgm_calidad, 
+                            self.boton_refrescar_mgm_comercial, self.boton_refrescar_mgm_gestion, self.boton_refrescar_mgm_ingenieria, 
+                            self.boton_refrescar_mgm_laboratorio, self.boton_refrescar_mgm_producto]
+
         lines_buscar = [self.line_buscar_tabla_syg_comex, self.line_buscar_tabla_syg_gestion, self.line_buscar_tabla_syg_ingenieria,
-                        self.line_buscar_tabla_syg_laboratorio, self.line_buscar_tabla_syg_visitas_ingenieria, self.line_buscar_tabla_syg_producto, 
-                        self.line_buscar_tabla_mgm_academia, self.line_buscar_tabla_mgm_calidad, self.line_buscar_tabla_mgm_comercial, 
-                        self.line_buscar_tabla_mgm_gestion, self.line_buscar_tabla_mgm_ingenieria, self.line_buscar_tabla_mgm_laboratorio, 
-                        self.line_buscar_tabla_mgm_producto]
+                        self.line_buscar_tabla_syg_laboratorio, self.line_buscar_tabla_syg_visitas_ingenieria, self.line_buscar_tabla_syg_calibraciones_ingenieria,
+                        self.line_buscar_tabla_syg_producto, self.line_buscar_tabla_mgm_academia, self.line_buscar_tabla_mgm_calidad,
+                        self.line_buscar_tabla_mgm_comercial, self.line_buscar_tabla_mgm_gestion, self.line_buscar_tabla_mgm_ingenieria, 
+                        self.line_buscar_tabla_mgm_laboratorio, self.line_buscar_tabla_mgm_producto]
 
         for boton in botones_agregar:
             boton.clicked.connect(self.ventana_agregar_evento.show)
@@ -68,14 +68,14 @@ class UI(QMainWindow):
         self.calendarWidget.clicked.connect(lambda: self.mostrar_eventos_calendario(self.tabla_user))
 
         tablas_eventos = [self.tabla_eventos_syg_comex, self.tabla_eventos_syg_gestion, self.tabla_eventos_syg_ingenieria,
-                        self.tabla_eventos_syg_laboratorio, self.tabla_visitas_syg_ingenieria, self.tabla_eventos_syg_producto, 
-                        self.tabla_eventos_mgm_academia, self.tabla_eventos_mgm_calidad, self.tabla_eventos_mgm_comercial, 
-                        self.tabla_eventos_mgm_gestion, self.tabla_eventos_mgm_ingenieria, self.tabla_eventos_mgm_laboratorio, 
-                        self.tabla_eventos_mgm_producto]
+                        self.tabla_eventos_syg_laboratorio, self.tabla_visitas_syg_ingenieria, self.tabla_calibraciones_syg_ingenieria,
+                        self.tabla_eventos_syg_producto, self.tabla_eventos_mgm_academia, self.tabla_eventos_mgm_calidad, 
+                        self.tabla_eventos_mgm_comercial, self.tabla_eventos_mgm_gestion, self.tabla_eventos_mgm_ingenieria, 
+                        self.tabla_eventos_mgm_laboratorio, self.tabla_eventos_mgm_producto]
 
         for tabla in tablas_eventos:
             tabla.doubleClicked.connect(lambda _, t=tabla: self.llamar_editar_evento(t))
-        
+
         self.desbloquear_tabs()
 
         if self.user == "German Roldan" or self.user == "Matias Roldan":
@@ -90,28 +90,31 @@ class UI(QMainWindow):
         self.timer.start(60000)  # refresca las tablas cada 15 segundos
 
     def desbloquear_admin(self):
-        self.tabWidget_2.setTabEnabled(2, True)
+        # self.tabWidget_2.setTabEnabled(2, True)
+        [self.tabWidget.setTabEnabled(i, True) for i in range(7, -1, -1)]
+        [self.tabWidget_2.setTabEnabled(i, True) for i in range(2, -1, -1)]
+        [self.tabWidget_3.setTabEnabled(i, True) for i in range(7, -1, -1)]
 
     def desbloquear_tabs(self):
         sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(self.user)[4])
         """Desbloquea las tabs según los sectores del usuario."""
-        [self.tabWidget.setTabEnabled(i, False) for i in range(6, -1, -1)]
+        [self.tabWidget.setTabEnabled(i, False) for i in range(7, -1, -1)]
         [self.tabWidget_2.setTabEnabled(i, False) for i in range(2, -1, -1)]
         [self.tabWidget_3.setTabEnabled(i, False) for i in range(7, -1, -1)]
 
         # Diccionario que mapea los sectores a los índices de las pestañas
         sectores_map = {"mgm_producto": (1, 6), "mgm_laboratorio": (1, 5), "mgm_ingenieria": (1, 4),
                         "mgm_gestion": (1, 3), "mgm_comercial": (1, 2), "mgm_calidad": (1, 1),
-                        "mgm_academia": (1, 0), "syg_producto": (0, 5), "syg_visitas_ingenieria": (0,4),
-                        "syg_laboratorio": (0, 3), "syg_ingenieria": (0, 2), "syg_gestion": (0, 1),
-                        "syg_comex": (0, 0),}
+                        "mgm_academia": (1, 0), "syg_producto": (0, 6), "syg_calibraciones_ingenieria": (0, 5),
+                        "syg_visitas_ingenieria": (0, 4), "syg_laboratorio": (0, 3), "syg_ingenieria": (0, 2), 
+                        "syg_gestion": (0, 1), "syg_comex": (0, 0),}
 
         # Iterar sobre los sectores y aplicar las configuraciones
         for sector in sectores:
             if sector in sectores_map:
                 tab_2_index, tab_3_or_tab_index = sectores_map[sector]
                 self.tabWidget_2.setTabEnabled(tab_2_index, True)
-                
+
                 # Determinar qué tabWidget usar
                 if sector.startswith("mgm"):
                     self.tabWidget_3.setTabEnabled(tab_3_or_tab_index, True)
@@ -134,7 +137,7 @@ class UI(QMainWindow):
             else:
                 # O si quieres agregar un nuevo evento a una fecha que no está en el diccionario, simplemente lo asignas
                 self.eventos_formateados[fecha] = [[titulo, prioridad, estado]]
-                
+
         self.calendarWidget.paintCell = self.paintCell  # Sobrescribir el método paintCell
         # Refrescar el calendario para aplicar cambios
         self.calendarWidget.updateCells()
@@ -181,6 +184,7 @@ class UI(QMainWindow):
                             'syg_ingenieria': ["events_syg_ingenieria", self.tabla_eventos_syg_ingenieria], 
                             'syg_laboratorio': ["events_syg_laboratorio", self.tabla_eventos_syg_laboratorio],
                             'syg_visitas_ingenieria': ["visitas_syg_ingenieria", self.tabla_visitas_syg_ingenieria],
+                            'syg_calibraciones_ingenieria': ["calibraciones_syg_ingenieria", self.tabla_calibraciones_syg_ingenieria],
                             'syg_producto': ["events_syg_producto", self.tabla_eventos_syg_producto], 
                             'mgm_academia': ["events_mgm_academia", self.tabla_eventos_mgm_academia], 
                             'mgm_calidad': ["events_mgm_calidad", self.tabla_eventos_mgm_calidad], 
@@ -193,7 +197,7 @@ class UI(QMainWindow):
         for sector in sectores:
             data = tablas_por_sectores[sector]
             tabla_widget = data[1]
-            
+
             # Save the selected row
             selected_row = tabla_widget.currentRow() 
             
@@ -249,24 +253,31 @@ class UI(QMainWindow):
             # Desempaquetamos las listas internas
             finalizado_interno_num, fecha_interno, encargado_interno = lista_finalizado[0]
             finalizado_num, fecha, encargado = lista_finalizado[1]
+            fecha_interno_formateada = datetime.strptime(fecha_interno, "%Y/%m/%d").strftime("%d/%m/%Y")
+            fecha_formateada = datetime.strptime(fecha, "%Y/%m/%d").strftime("%d/%m/%Y")
 
             # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
-            finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno}\n{encargado_interno}"
-            finalizado = f"{finalizado_num}\n{fecha}\n{encargado}"
+            finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno_formateada}\n{encargado_interno}"
+            finalizado = f"{finalizado_num}\n{fecha_formateada}\n{encargado}"
 
             lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
             encargados_formateado = "\n".join(lista_encargados)
 
             lista_fechas_limite = ast.literal_eval(row[9])
             ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
+
+            # Format the datetime object into the desired format
+            ultima_fecha_formateada = datetime.strptime(ultima_fecha, "%Y/%m/%d").strftime("%d/%m/%Y")
             # Formatear el string con salto de línea
-            fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
-            
+            fecha_limite_formateada = f"""{ultima_fecha_formateada}\n{ultimo_nombre}"""
+
+            fecha_carga_formateada = datetime.strptime(row[4], "%Y/%m/%d").strftime("%d/%m/%Y")
+
             fmt = "%Y/%m/%d"  # Formato de la fecha
             hoy = datetime.today().date()
             fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
 
-            for colindex, value in enumerate([row[0], row[4], row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
+            for colindex, value in enumerate([row[0], fecha_carga_formateada, row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
                 try:
                     tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
                     tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
@@ -274,10 +285,10 @@ class UI(QMainWindow):
                     print("[ERROR] Error al agregar item o no existen items")
             num_saltos = row[2].count("\n")
             tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
-        
+
             colors = {"0": QColor(255, 0, 0, 100),
                     "1": QColor(0, 255, 0, 100),}
-            
+
             # Calcular la diferencia en días
             diferencia = (fecha_obj - hoy).days
             if diferencia <= 7:
@@ -308,19 +319,20 @@ class UI(QMainWindow):
         """Muestra los eventos en la tabla."""
         tablas_por_sectores = {'syg': [["events_syg_comex", "Eventos SYG Comex"], ["events_syg_gestion", "Eventos SYG Gestión"], 
                                     ["events_syg_ingenieria", "Eventos SYG Ingeniería"], ["events_syg_laboratorio", "Eventos SYG Laboratorio"],
-                                    ["visitas_syg_ingenieria", "Visitas SYG Ingeniería"], ["events_syg_producto", "Eventos SYG Producto"]],
+                                    ["visitas_syg_ingenieria", "Visitas SYG Ingeniería"], ["calibraciones_syg_ingenieria", "Calibraciones SYG Ingeniería"],
+                                    ["events_syg_producto", "Eventos SYG Producto"]],
                                 'mgm': [["events_mgm_academia", "Eventos MGM Academia"], ["events_mgm_calidad", "Eventos MGM Calidad"], 
                                     ["events_mgm_comercial", "Eventos MGM Comercial"], ["events_mgm_gestion", "Eventos MGM Gestión"], 
                                     ["events_mgm_ingenieria", "Eventos MGM Ingeniería"], ["events_mgm_laboratorio", "Eventos MGM Laboratorio"], 
                                     ["events_mgm_producto", "Eventos MGM Producto"]],
                                 'todo': [["events_syg_comex", "Eventos SYG Comex"], ["events_syg_gestion", "Eventos SYG Gestión"],
                                     ["events_syg_ingenieria", "Eventos SYG Ingeniería"], ["events_syg_laboratorio", "Eventos SYG Laboratorio"],
-                                    ["visitas_syg_ingenieria", "Visitas SYG Ingeniería"], ["events_syg_producto", "Eventos SYG Producto"],
-                                    ["events_mgm_academia", "Eventos MGM Academia"], ["events_mgm_calidad", "Eventos MGM Calidad"], 
-                                    ["events_mgm_comercial", "Eventos MGM Comercial"], ["events_mgm_gestion", "Eventos MGM Gestión"], 
-                                    ["events_mgm_ingenieria", "Eventos MGM Ingeniería"], ["events_mgm_laboratorio", "Eventos MGM Laboratorio"], 
-                                    ["events_mgm_producto", "Eventos MGM Producto"]]}
-
+                                    ["visitas_syg_ingenieria", "Visitas SYG Ingeniería"], ["calibraciones_syg_ingenieria", "Calibraciones SYG Ingeniería"], 
+                                    ["events_syg_producto", "Eventos SYG Producto"], ["events_mgm_academia", "Eventos MGM Academia"], 
+                                    ["events_mgm_calidad", "Eventos MGM Calidad"], ["events_mgm_comercial", "Eventos MGM Comercial"], 
+                                    ["events_mgm_gestion", "Eventos MGM Gestión"], ["events_mgm_ingenieria", "Eventos MGM Ingeniería"], 
+                                    ["events_mgm_laboratorio", "Eventos MGM Laboratorio"], ["events_mgm_producto", "Eventos MGM Producto"]]}
+        
         tabla_widget.clear()
         tableindex = 0
         tabla_widget.setRowCount(sum(len(self.claseSQLite.leer_eventos(tabla[0])) for tabla in tablas_por_sectores[tabla]))
@@ -419,7 +431,7 @@ class UI(QMainWindow):
         tabla_widget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         tabla_widget.setRowCount(len(self.eventos))
         tabla_widget.setColumnCount(9)
-        
+
         column_width = [30, 100, 100, 200, 500, 180, 120, 120, 120]
         headers = ["id", "Fecha Carga", "Empresa", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
         for i, header in enumerate(headers):
@@ -499,7 +511,8 @@ class UI(QMainWindow):
                     self.tabla_eventos_mgm_academia: "events_mgm_academia", self.tabla_eventos_mgm_calidad: "events_mgm_calidad", 
                     self.tabla_eventos_mgm_comercial: "events_mgm_comercial", self.tabla_eventos_mgm_gestion: "events_mgm_gestion",
                     self.tabla_eventos_mgm_ingenieria: "events_mgm_ingenieria", self.tabla_eventos_mgm_laboratorio: "events_mgm_laboratorio", 
-                    self.tabla_eventos_mgm_producto: "events_mgm_producto", 12: "events_admin_administracion"}
+                    self.tabla_eventos_mgm_producto: "events_mgm_producto", self.tabla_calibraciones_syg_ingenieria: "calibraciones_syg_ingenieria",
+                    12: "events_admin_administracion"}
         datos_evento = tabla_seleccionada.selectedItems()
         fecha_carga = datos_evento[0].text()
         empresa = datos_evento[1].text()
