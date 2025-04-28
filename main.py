@@ -8,6 +8,7 @@ from lib.sql import SQLite
 from lib.agregar_evento import ADD_EVENT
 from lib.editar_evento import EDIT_EVENT
 from lib.agregar_empresa import ADD_COMPANY
+from lib.eventos_archivados import ARCHIVE
 from datetime import datetime, date
 import ast
 
@@ -28,7 +29,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.1.5 test build")
+        self.action_version.setText("Versión 1.1.7 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_calibraciones_ingenieria,
@@ -47,6 +48,12 @@ class UI(QMainWindow):
                             self.boton_refrescar_syg_producto, self.boton_refrescar_mgm_academia, self.boton_refrescar_mgm_calidad, 
                             self.boton_refrescar_mgm_comercial, self.boton_refrescar_mgm_gestion, self.boton_refrescar_mgm_ingenieria, 
                             self.boton_refrescar_mgm_laboratorio, self.boton_refrescar_mgm_producto]
+        
+        botones_archivo = [self.boton_archivo_syg_comex, self.boton_archivo_syg_gestion, self.boton_archivo_syg_ingenieria,
+                            self.boton_archivo_syg_laboratorio, self.boton_archivo_syg_visitas_ingenieria, self.boton_archivo_syg_calibraciones_ingenieria,
+                            self.boton_archivo_syg_producto, self.boton_archivo_mgm_academia, self.boton_archivo_mgm_calidad, 
+                            self.boton_archivo_mgm_comercial, self.boton_archivo_mgm_gestion, self.boton_archivo_mgm_ingenieria, 
+                            self.boton_archivo_mgm_laboratorio, self.boton_archivo_mgm_producto]
 
         lines_buscar = [self.line_buscar_tabla_syg_comex, self.line_buscar_tabla_syg_gestion, self.line_buscar_tabla_syg_ingenieria,
                         self.line_buscar_tabla_syg_laboratorio, self.line_buscar_tabla_syg_visitas_ingenieria, self.line_buscar_tabla_syg_calibraciones_ingenieria,
@@ -62,6 +69,9 @@ class UI(QMainWindow):
 
         for line in lines_buscar:
             line.textChanged.connect(lambda _, l=line: self.buscar_evento(l))
+
+        for boton in botones_archivo:
+            boton.clicked.connect(lambda _, b=boton: self.mostrar_tabla_archivo(b))
 
         self.refrescar_tabla()
         self.calendarWidget.clicked.connect(self.mostrar_eventos_lista)
@@ -237,7 +247,7 @@ class UI(QMainWindow):
         tabla_widget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         tabla_widget.setRowCount(len(self.eventos))
         tabla_widget.setColumnCount(9)
-        
+         
         column_width = [30, 100, 100, 200, 500, 180, 120, 120, 120]
         headers = ["id", "Fecha Carga", "Empresa", "Empresa", "Descripción", "Encargado/s", "Fecha Límite", "Terminado", "Finalizado"]
         for i, header in enumerate(headers):
@@ -245,65 +255,69 @@ class UI(QMainWindow):
         tabla_widget.setHorizontalHeaderLabels(headers)
 
         tableindex = 0
+        menos = 0
 
-        for tableindex, row in enumerate(self.eventos):
-
+        for i, row in enumerate(self.eventos):
             lista_finalizado = ast.literal_eval(row[11])  # Convierte la cadena en lista, ejemplo lista_finalizado = [["1", "2025/03/11", "Juan Doe"], ["0", "2025/03/11", "Juan Doe"]]
 
             # Desempaquetamos las listas internas
             finalizado_interno_num, fecha_interno, encargado_interno = lista_finalizado[0]
-            finalizado_num, fecha, encargado = lista_finalizado[1]
-            fecha_interno_formateada = datetime.strptime(fecha_interno, "%Y/%m/%d").strftime("%d/%m/%Y")
-            fecha_formateada = datetime.strptime(fecha, "%Y/%m/%d").strftime("%d/%m/%Y")
+            if finalizado_interno_num == "0":
+                finalizado_num, fecha, encargado = lista_finalizado[1]
+                fecha_interno_formateada = datetime.strptime(fecha_interno, "%Y/%m/%d").strftime("%d/%m/%Y")
+                fecha_formateada = datetime.strptime(fecha, "%Y/%m/%d").strftime("%d/%m/%Y")
+                # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
+                finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno_formateada}\n{encargado_interno}"
+                finalizado = f"{finalizado_num}\n{fecha_formateada}\n{encargado}"
 
-            # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
-            finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno_formateada}\n{encargado_interno}"
-            finalizado = f"{finalizado_num}\n{fecha_formateada}\n{encargado}"
+                lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
+                encargados_formateado = "\n".join(lista_encargados)
 
-            lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
-            encargados_formateado = "\n".join(lista_encargados)
+                lista_fechas_limite = ast.literal_eval(row[9])
+                ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
 
-            lista_fechas_limite = ast.literal_eval(row[9])
-            ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
+                # Format the datetime object into the desired format
+                ultima_fecha_formateada = datetime.strptime(ultima_fecha, "%Y/%m/%d").strftime("%d/%m/%Y")
+                # Formatear el string con salto de línea
+                fecha_limite_formateada = f"""{ultima_fecha_formateada}\n{ultimo_nombre}"""
 
-            # Format the datetime object into the desired format
-            ultima_fecha_formateada = datetime.strptime(ultima_fecha, "%Y/%m/%d").strftime("%d/%m/%Y")
-            # Formatear el string con salto de línea
-            fecha_limite_formateada = f"""{ultima_fecha_formateada}\n{ultimo_nombre}"""
+                fecha_carga_formateada = datetime.strptime(row[4], "%Y/%m/%d").strftime("%d/%m/%Y")
 
-            fecha_carga_formateada = datetime.strptime(row[4], "%Y/%m/%d").strftime("%d/%m/%Y")
+                fmt = "%Y/%m/%d"  # Formato de la fecha
+                hoy = datetime.today().date()
+                fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
 
-            fmt = "%Y/%m/%d"  # Formato de la fecha
-            hoy = datetime.today().date()
-            fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
+                for colindex, value in enumerate([row[0], fecha_carga_formateada, row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
+                    try:
+                        tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
+                        tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
+                    except:
+                        print("[ERROR] Error al agregar item o no existen items")
+                num_saltos = row[2].count("\n")
+                tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
 
-            for colindex, value in enumerate([row[0], fecha_carga_formateada, row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
-                try:
-                    tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
-                    tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
-                except:
-                    print("[ERROR] Error al agregar item o no existen items")
-            num_saltos = row[2].count("\n")
-            tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
+                colors = {"0": QColor(255, 0, 0, 100),
+                        "1": QColor(0, 255, 0, 100),}
 
-            colors = {"0": QColor(255, 0, 0, 100),
-                    "1": QColor(0, 255, 0, 100),}
+                # Calcular la diferencia en días
+                diferencia = (fecha_obj - hoy).days
+                if diferencia <= 7:
+                    tabla_widget.item(tableindex, 6).setBackground(QColor(255, 0, 0, 100))
+                elif 7 < diferencia <= 14:
+                    tabla_widget.item(tableindex, 6).setBackground(QColor(255, 120, 0, 100))
+                elif 14 < diferencia <= 21:
+                    tabla_widget.item(tableindex, 6).setBackground(QColor(255, 255, 0, 100))
+                elif diferencia > 21:
+                    tabla_widget.item(tableindex, 6).setBackground(QColor(0, 255, 0, 100))
 
-            # Calcular la diferencia en días
-            diferencia = (fecha_obj - hoy).days
-            if diferencia <= 7:
-                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 0, 0, 100))
-            elif 7 < diferencia <= 14:
-                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 120, 0, 100))
-            elif 14 < diferencia <= 21:
-                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 255, 0, 100))
-            elif diferencia > 21:
-                tabla_widget.item(tableindex, 6).setBackground(QColor(0, 255, 0, 100))
-
-            if finalizado_interno_num in colors:
-                tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_interno_num])
-            if finalizado_num in colors:
-                tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_num])
+                if finalizado_interno_num in colors:
+                    tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_interno_num])
+                if finalizado_num in colors:
+                    tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_num])
+                tableindex += 1
+            else:    
+                menos += 1
+                tabla_widget.setRowCount(len(self.eventos) - menos)
 
         # Diccionario con los índices de columna y sus modos de ajuste
         resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
@@ -335,6 +349,7 @@ class UI(QMainWindow):
         
         tabla_widget.clear()
         tableindex = 0
+        menos = 0
         tabla_widget.setRowCount(sum(len(self.claseSQLite.leer_eventos(tabla[0])) for tabla in tablas_por_sectores[tabla]))
 
         for tabla_info in tablas_por_sectores[tabla]:
@@ -351,65 +366,69 @@ class UI(QMainWindow):
                 tabla_widget.setColumnWidth(i, column_width[i])
             tabla_widget.setHorizontalHeaderLabels(headers)
             if self.eventos:
-                for etc, row in enumerate(self.eventos):
+                for i, row in enumerate(self.eventos):
                     lista_finalizado = ast.literal_eval(row[11])  # Convierte la cadena en lista, ejemplo lista_finalizado = [["1", "2025/03/11", "Juan Doe"], ["0", "2025/03/11", "Juan Doe"]]
 
                     # Desempaquetamos las listas internas
                     finalizado_interno_num, fecha_interno, encargado_interno = lista_finalizado[0]
-                    finalizado_num, fecha, encargado = lista_finalizado[1]
+                    if finalizado_interno_num == "0":
+                        finalizado_num, fecha, encargado = lista_finalizado[1]
 
-                    # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
-                    finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno}\n{encargado_interno}"
-                    finalizado = f"{finalizado_num}\n{fecha}\n{encargado}"
+                        # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
+                        finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno}\n{encargado_interno}"
+                        finalizado = f"{finalizado_num}\n{fecha}\n{encargado}"
 
-                    lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
-                    encargados_formateado = "\n".join(lista_encargados)
+                        lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
+                        encargados_formateado = "\n".join(lista_encargados)
 
-                    lista_fechas_limite = ast.literal_eval(row[9])
-                    ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
-                    # Formatear el string con salto de línea
-                    fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
+                        lista_fechas_limite = ast.literal_eval(row[9])
+                        ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
+                        # Formatear el string con salto de línea
+                        fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
 
-                    fmt = "%Y/%m/%d"  # Formato de la fecha
-                    hoy = datetime.today().date()
-                    fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
+                        fmt = "%Y/%m/%d"  # Formato de la fecha
+                        hoy = datetime.today().date()
+                        fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
 
-                    for colindex, value in enumerate([tabla_info[1], row[0], row[4], row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
-                        try:                            
-                            item = QtWidgets.QTableWidgetItem(str(value))  # Crear el item
-                            tabla_widget.setItem(tableindex, colindex, item)  # Asignarlo a la tabla
+                        for colindex, value in enumerate([tabla_info[1], row[0], row[4], row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
+                            try:                            
+                                item = QtWidgets.QTableWidgetItem(str(value))  # Crear el item
+                                tabla_widget.setItem(tableindex, colindex, item)  # Asignarlo a la tabla
+                                
+                                if item is not None:  # Verificar que el item no es None
+                                    item.setTextAlignment(Qt.AlignCenter)
+                                else:
+                                    print(f"[WARNING] No se pudo agregar el item en ({tableindex}, {colindex})")
                             
-                            if item is not None:  # Verificar que el item no es None
-                                item.setTextAlignment(Qt.AlignCenter)
-                            else:
-                                print(f"[WARNING] No se pudo agregar el item en ({tableindex}, {colindex})")
+                            except Exception as e:
+                                print("[ERROR] Error al agregar item o no existen items: ", e)
+                                
+                        num_saltos = row[2].count("\n")
+                        tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
+
+                        colors = {"0": QColor(255, 0, 0, 100),
+                                "1": QColor(0, 255, 0, 100),}
                         
-                        except Exception as e:
-                            print("[ERROR] Error al agregar item o no existen items: ", e)
+                        # Calcular la diferencia en días
+                        diferencia = (fecha_obj - hoy).days
+                        if diferencia <= 7:
+                            tabla_widget.item(tableindex, 7).setBackground(QColor(255, 0, 0, 100))
+                        elif 7 < diferencia <= 14:
+                            tabla_widget.item(tableindex, 7).setBackground(QColor(255, 120, 0, 100))
+                        elif 14 < diferencia <= 21:
+                            tabla_widget.item(tableindex, 7).setBackground(QColor(255, 255, 0, 100))
+                        elif diferencia > 21:
+                            tabla_widget.item(tableindex, 7).setBackground(QColor(0, 255, 0, 100))
+
+                        if finalizado_interno_num in colors:
+                            tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_interno_num])
+                        if finalizado_num in colors:
+                            tabla_widget.item(tableindex, 9).setBackground(colors[finalizado_num])
                             
-                    num_saltos = row[2].count("\n")
-                    tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
-
-                    colors = {"0": QColor(255, 0, 0, 100),
-                            "1": QColor(0, 255, 0, 100),}
-                    
-                    # Calcular la diferencia en días
-                    diferencia = (fecha_obj - hoy).days
-                    if diferencia <= 7:
-                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 0, 0, 100))
-                    elif 7 < diferencia <= 14:
-                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 120, 0, 100))
-                    elif 14 < diferencia <= 21:
-                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 255, 0, 100))
-                    elif diferencia > 21:
-                        tabla_widget.item(tableindex, 7).setBackground(QColor(0, 255, 0, 100))
-
-                    if finalizado_interno_num in colors:
-                        tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_interno_num])
-                    if finalizado_num in colors:
-                        tabla_widget.item(tableindex, 9).setBackground(colors[finalizado_num])
-                        
-                    tableindex += 1
+                        tableindex += 1
+                    else:    
+                        menos += 1
+                        tabla_widget.setRowCount(len(self.eventos) - menos)
 
             # Diccionario con los índices de columna y sus modos de ajuste
             resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
@@ -421,7 +440,7 @@ class UI(QMainWindow):
             for col, mode in resize_modes.items():
                 tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
 
-    def mostrar_eventos_especificos(self, tabla_widget, eventos):   
+    def mostrar_eventos_especificos(self, tabla_widget, eventos):
         """Muestra los eventos en la tabla."""
         self.eventos = eventos
         # self.eventos.sort(key=lambda x: (x[7], x[10]))
@@ -439,59 +458,70 @@ class UI(QMainWindow):
         tabla_widget.setHorizontalHeaderLabels(headers)
 
         tableindex = 0
+        menos = 0
 
-        for tableindex, row in enumerate(self.eventos):
+        for i, row in enumerate(self.eventos):
 
             lista_finalizado = ast.literal_eval(row[11])  # Convierte la cadena en lista, ejemplo lista_finalizado = [["1", "2025/03/11", "Juan Doe"], ["0", "2025/03/11", "Juan Doe"]]
 
             # Desempaquetamos las listas internas
             finalizado_interno_num, fecha_interno, encargado_interno = lista_finalizado[0]
-            finalizado_num, fecha, encargado = lista_finalizado[1]
+            if finalizado_interno_num == "0":
+                finalizado_num, fecha, encargado = lista_finalizado[1]
+                fecha_interno_formateada = datetime.strptime(fecha_interno, "%Y/%m/%d").strftime("%d/%m/%Y")
+                fecha_formateada = datetime.strptime(fecha, "%Y/%m/%d").strftime("%d/%m/%Y")
+                # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
+                finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno_formateada}\n{encargado_interno}"
+                finalizado = f"{finalizado_num}\n{fecha_formateada}\n{encargado}"
 
-            # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
-            finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno}\n{encargado_interno}"
-            finalizado = f"{finalizado_num}\n{fecha}\n{encargado}"
+                lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
+                encargados_formateado = "\n".join(lista_encargados)
 
-            lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
-            encargados_formateado = "\n".join(lista_encargados)
+                lista_fechas_limite = ast.literal_eval(row[9])
+                ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
 
-            lista_fechas_limite = ast.literal_eval(row[9])
-            ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
-            # Formatear el string con salto de línea
-            fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
+                # Format the datetime object into the desired format
+                ultima_fecha_formateada = datetime.strptime(ultima_fecha, "%Y/%m/%d").strftime("%d/%m/%Y")
+                # Formatear el string con salto de línea
+                fecha_limite_formateada = f"""{ultima_fecha_formateada}\n{ultimo_nombre}"""
 
-            fmt = "%Y/%m/%d"  # Formato de la fecha
-            hoy = datetime.today().date()
-            fecha_obj = datetime.strptime(ultima_fecha, fmt).date()
+                fecha_carga_formateada = datetime.strptime(row[4], "%Y/%m/%d").strftime("%d/%m/%Y")
 
-            for colindex, value in enumerate([row[0], row[4], row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
-                try:
-                    tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
-                    tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
-                except:
-                    print("[ERROR] Error al agregar item o no existen items")
-            num_saltos = row[2].count("\n")
-            tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
+                fmt = "%Y/%m/%d"  # Formato de la fecha
+                hoy = datetime.today().date()
+                fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
 
-            colors = {"0": QColor(255, 0, 0, 100),
-                    "1": QColor(0, 255, 0, 100),}
+                for colindex, value in enumerate([row[0], fecha_carga_formateada, row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
+                    try:
+                        tabla_widget.setItem(tableindex, colindex, QtWidgets.QTableWidgetItem(str(value)))
+                        tabla_widget.item(tableindex, colindex).setTextAlignment(Qt.AlignCenter)
+                    except:
+                        print("[ERROR] Error al agregar item o no existen items")
+                num_saltos = row[2].count("\n")
+                tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
 
-            # Calcular la diferencia en días
-            diferencia = (fecha_obj - hoy).days
-            if diferencia <= 7:
-                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 0, 0, 100))
-            elif 7 < diferencia <= 14: 
-                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 120, 0, 100))
-            elif 14 < diferencia <= 21:
-                tabla_widget.item(tableindex, 6).setBackground(QColor(255, 255, 0, 100))
-            elif diferencia > 21:
-                tabla_widget.item(tableindex, 6).setBackground(QColor(0, 255, 0, 100))
+                colors = {"0": QColor(255, 0, 0, 100),
+                        "1": QColor(0, 255, 0, 100),}
 
-            if finalizado_interno_num in colors:
-                tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_interno_num])
-            if finalizado_num in colors:
-                tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_num])
+                # Calcular la diferencia en días
+                diferencia = (fecha_obj - hoy).days
+                if diferencia <= 7:
+                    tabla_widget.item(tableindex, 6).setBackground(QColor(255, 0, 0, 100))
+                elif 7 < diferencia <= 14: 
+                    tabla_widget.item(tableindex, 6).setBackground(QColor(255, 120, 0, 100))
+                elif 14 < diferencia <= 21:
+                    tabla_widget.item(tableindex, 6).setBackground(QColor(255, 255, 0, 100))
+                elif diferencia > 21:
+                    tabla_widget.item(tableindex, 6).setBackground(QColor(0, 255, 0, 100))
 
+                if finalizado_interno_num in colors:
+                    tabla_widget.item(tableindex, 7).setBackground(colors[finalizado_interno_num])
+                if finalizado_num in colors:
+                    tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_num])
+                tableindex += 1
+            else:
+                menos += 1
+                tabla_widget.setRowCount(len(self.eventos) - menos)
         # Diccionario con los índices de columna y sus modos de ajuste
         resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
                     2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Interactive,
@@ -501,6 +531,25 @@ class UI(QMainWindow):
         # Aplicar los modos en un bucle
         for col, mode in resize_modes.items():
             tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
+
+    def mostrar_tabla_archivo(self, boton):
+        sector_table_map = {self.boton_archivo_syg_comex: ["events_syg_comex", self.tabla_eventos_syg_comex],
+                            self.boton_archivo_syg_gestion: ["events_syg_gestion", self.tabla_eventos_syg_gestion], 
+                            self.boton_archivo_syg_ingenieria: ["events_syg_ingenieria", self.tabla_eventos_syg_ingenieria], 
+                            self.boton_archivo_syg_laboratorio: ["events_syg_laboratorio", self.tabla_eventos_syg_laboratorio],
+                            self.boton_archivo_syg_visitas_ingenieria: ["visitas_syg_ingenieria", self.tabla_visitas_syg_ingenieria], 
+                            self.boton_archivo_syg_calibraciones_ingenieria: ["calibraciones_syg_ingenieria", self.tabla_calibraciones_syg_ingenieria],
+                            self.boton_archivo_syg_producto: ["events_syg_producto", self.tabla_eventos_syg_producto],
+                            self.boton_archivo_mgm_academia: ["events_mgm_academia", self.tabla_eventos_mgm_academia], 
+                            self.boton_archivo_mgm_calidad: ["events_mgm_calidad", self.tabla_eventos_mgm_calidad], 
+                            self.boton_archivo_mgm_comercial: ["events_mgm_comercial", self.tabla_eventos_mgm_comercial], 
+                            self.boton_archivo_mgm_gestion: ["events_mgm_gestion", self.tabla_eventos_mgm_gestion], 
+                            self.boton_archivo_mgm_ingenieria: ["events_mgm_ingenieria", self.tabla_eventos_mgm_ingenieria], 
+                            self.boton_archivo_mgm_laboratorio: ["events_mgm_laboratorio", self.tabla_eventos_mgm_laboratorio], 
+                            self.boton_archivo_mgm_producto: ["events_mgm_producto", self.tabla_eventos_mgm_producto]}
+        
+        self.ventana_archivo = ARCHIVE(sector_table_map[boton][0])
+        self.ventana_archivo.show()
 
     def llamar_editar_evento(self, tabla_seleccionada):
 

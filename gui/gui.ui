@@ -627,44 +627,7 @@ QToolBox::tab:selected {
                <string> Comex </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_3">
-               <item row="1" column="0">
-                <widget class="QLineEdit" name="line_buscar_tabla_syg_comex">
-                 <property name="styleSheet">
-                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Buscar . . .</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="4">
-                <widget class="QPushButton" name="boton_refrescar_syg_comex">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="2">
-                <widget class="QPushButton" name="boton_agregar_syg_comex">
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>+</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0" colspan="5">
+               <item row="2" column="1" colspan="5">
                 <widget class="QTableWidget" name="tabla_eventos_syg_comex">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
@@ -779,7 +742,7 @@ QToolBox::tab:selected {
                  </item>
                 </widget>
                </item>
-               <item row="1" column="3">
+               <item row="1" column="4">
                 <widget class="QPushButton" name="boton_eliminar_syg_comex">
                  <property name="enabled">
                   <bool>false</bool>
@@ -792,6 +755,50 @@ QToolBox::tab:selected {
                  </property>
                  <property name="text">
                   <string>-</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="5">
+                <widget class="QPushButton" name="boton_refrescar_syg_comex">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="line_buscar_tabla_syg_comex">
+                 <property name="styleSheet">
+                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Buscar . . .</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QPushButton" name="boton_agregar_syg_comex">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QPushButton" name="boton_archivo_syg_comex">
+                 <property name="text">
+                  <string> Archivados </string>
                  </property>
                 </widget>
                </item>
@@ -836,6 +843,22 @@ QToolBox::tab:selected {
                  </property>
                  <property name="text">
                   <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QPushButton" name="boton_eliminar_syg_gestion">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
                  </property>
                 </widget>
                </item>
@@ -948,19 +971,10 @@ QToolBox::tab:selected {
                  </item>
                 </widget>
                </item>
-               <item row="0" column="3">
-                <widget class="QPushButton" name="boton_eliminar_syg_gestion">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>0</height>
-                  </size>
-                 </property>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_syg_gestion">
                  <property name="text">
-                  <string>-</string>
+                  <string> Archivados </string>
                  </property>
                 </widget>
                </item>
@@ -1136,6 +1150,13 @@ QToolBox::tab:selected {
                  </property>
                 </widget>
                </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_syg_ingenieria">
+                 <property name="text">
+                  <string> Archivados </string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
              <widget class="QWidget" name="laboratorio_tab">
@@ -1302,6 +1323,13 @@ QToolBox::tab:selected {
                  </property>
                  <property name="text">
                   <string>-</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_syg_laboratorio">
+                 <property name="text">
+                  <string> Archivados </string>
                  </property>
                 </widget>
                </item>
@@ -1474,6 +1502,13 @@ QToolBox::tab:selected {
                  </property>
                 </widget>
                </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_syg_visitas_ingenieria">
+                 <property name="text">
+                  <string> Archivados </string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
              <widget class="QWidget" name="tab_2">
@@ -1481,17 +1516,7 @@ QToolBox::tab:selected {
                <string> Calibraciones Ingeniería </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_23">
-               <item row="0" column="0">
-                <widget class="QLineEdit" name="line_buscar_tabla_syg_calibraciones_ingenieria">
-                 <property name="styleSheet">
-                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Buscar . . .</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
+               <item row="0" column="2">
                 <widget class="QPushButton" name="boton_agregar_syg_calibraciones_ingenieria">
                  <property name="minimumSize">
                   <size>
@@ -1507,7 +1532,28 @@ QToolBox::tab:selected {
                  </property>
                 </widget>
                </item>
-               <item row="0" column="2">
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="line_buscar_tabla_syg_calibraciones_ingenieria">
+                 <property name="styleSheet">
+                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Buscar . . .</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QPushButton" name="boton_refrescar_syg_calibraciones_ingenieria">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
                 <widget class="QPushButton" name="boton_eliminar_syg_calibraciones_ingenieria">
                  <property name="enabled">
                   <bool>false</bool>
@@ -1523,18 +1569,7 @@ QToolBox::tab:selected {
                  </property>
                 </widget>
                </item>
-               <item row="0" column="3">
-                <widget class="QPushButton" name="boton_refrescar_syg_calibraciones_ingenieria">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0" colspan="4">
+               <item row="1" column="0" colspan="5">
                 <widget class="QTableWidget" name="tabla_calibraciones_syg_ingenieria">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
@@ -1641,6 +1676,13 @@ QToolBox::tab:selected {
                    <string/>
                   </property>
                  </item>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_syg_calibraciones_ingenieria">
+                 <property name="text">
+                  <string> Archivados </string>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -1809,6 +1851,13 @@ QToolBox::tab:selected {
                  </property>
                  <property name="text">
                   <string>-</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_syg_producto">
+                 <property name="text">
+                  <string> Archivados </string>
                  </property>
                 </widget>
                </item>
@@ -2121,6 +2170,13 @@ color: grey;
                  </property>
                 </widget>
                </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_mgm_academia">
+                 <property name="text">
+                  <string> Archivados </string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
              <widget class="QWidget" name="calidad_tab">
@@ -2128,7 +2184,7 @@ color: grey;
                <string> Calidad </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_12">
-               <item row="0" column="3">
+               <item row="0" column="4">
                 <widget class="QPushButton" name="boton_refrescar_mgm_calidad">
                  <property name="text">
                   <string/>
@@ -2139,7 +2195,7 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
+               <item row="0" column="2">
                 <widget class="QPushButton" name="boton_agregar_mgm_calidad">
                  <property name="minimumSize">
                   <size>
@@ -2165,7 +2221,23 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0" colspan="4">
+               <item row="0" column="3">
+                <widget class="QPushButton" name="boton_eliminar_mgm_calidad">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="5">
                 <widget class="QTableWidget" name="tabla_eventos_mgm_calidad">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
@@ -2274,19 +2346,10 @@ color: grey;
                  </item>
                 </widget>
                </item>
-               <item row="0" column="2">
-                <widget class="QPushButton" name="boton_eliminar_mgm_calidad">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>0</height>
-                  </size>
-                 </property>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_mgm_calidad">
                  <property name="text">
-                  <string>-</string>
+                  <string> Archivados </string>
                  </property>
                 </widget>
                </item>
@@ -2297,7 +2360,7 @@ color: grey;
                <string> Comercial </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_13">
-               <item row="1" column="0" colspan="4">
+               <item row="1" column="0" colspan="5">
                 <widget class="QTableWidget" name="tabla_eventos_mgm_comercial">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
@@ -2406,7 +2469,17 @@ color: grey;
                  </item>
                 </widget>
                </item>
-               <item row="0" column="1">
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="line_buscar_tabla_mgm_comercial">
+                 <property name="styleSheet">
+                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Buscar . . .</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
                 <widget class="QPushButton" name="boton_agregar_mgm_comercial">
                  <property name="minimumSize">
                   <size>
@@ -2422,17 +2495,7 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="0" column="0">
-                <widget class="QLineEdit" name="line_buscar_tabla_mgm_comercial">
-                 <property name="styleSheet">
-                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Buscar . . .</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="3">
+               <item row="0" column="4">
                 <widget class="QPushButton" name="boton_refrescar_mgm_comercial">
                  <property name="text">
                   <string/>
@@ -2443,7 +2506,7 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="0" column="2">
+               <item row="0" column="3">
                 <widget class="QPushButton" name="boton_eliminar_mgm_comercial">
                  <property name="enabled">
                   <bool>false</bool>
@@ -2459,6 +2522,13 @@ color: grey;
                  </property>
                 </widget>
                </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_mgm_comercial">
+                 <property name="text">
+                  <string> Archivados </string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
              <widget class="QWidget" name="gestion_tab">
@@ -2466,7 +2536,7 @@ color: grey;
                <string> Gestión </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_14">
-               <item row="0" column="1">
+               <item row="0" column="2">
                 <widget class="QPushButton" name="boton_agregar_mgm_gestion">
                  <property name="minimumSize">
                   <size>
@@ -2492,7 +2562,7 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="0" column="3">
+               <item row="0" column="4">
                 <widget class="QPushButton" name="boton_refrescar_mgm_gestion">
                  <property name="text">
                   <string/>
@@ -2503,7 +2573,7 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0" colspan="4">
+               <item row="1" column="0" colspan="5">
                 <widget class="QTableWidget" name="tabla_eventos_mgm_gestion">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
@@ -2612,7 +2682,7 @@ color: grey;
                  </item>
                 </widget>
                </item>
-               <item row="0" column="2">
+               <item row="0" column="3">
                 <widget class="QPushButton" name="boton_eliminar_mgm_gestion">
                  <property name="enabled">
                   <bool>false</bool>
@@ -2628,6 +2698,13 @@ color: grey;
                  </property>
                 </widget>
                </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_mgm_gestion">
+                 <property name="text">
+                  <string> Archivados </string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
              <widget class="QWidget" name="ingenieria_tab">
@@ -2635,17 +2712,7 @@ color: grey;
                <string> Ingeniería </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_15">
-               <item row="0" column="0">
-                <widget class="QLineEdit" name="line_buscar_tabla_mgm_ingenieria">
-                 <property name="styleSheet">
-                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Buscar . . .</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
+               <item row="0" column="2">
                 <widget class="QPushButton" name="boton_agregar_mgm_ingenieria">
                  <property name="minimumSize">
                   <size>
@@ -2661,7 +2728,17 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="0" column="3">
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="line_buscar_tabla_mgm_ingenieria">
+                 <property name="styleSheet">
+                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Buscar . . .</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
                 <widget class="QPushButton" name="boton_refrescar_mgm_ingenieria">
                  <property name="text">
                   <string/>
@@ -2672,7 +2749,7 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0" colspan="4">
+               <item row="1" column="0" colspan="5">
                 <widget class="QTableWidget" name="tabla_eventos_mgm_ingenieria">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
@@ -2781,7 +2858,7 @@ color: grey;
                  </item>
                 </widget>
                </item>
-               <item row="0" column="2">
+               <item row="0" column="3">
                 <widget class="QPushButton" name="boton_eliminar_mgm_ingenieria">
                  <property name="enabled">
                   <bool>false</bool>
@@ -2797,6 +2874,13 @@ color: grey;
                  </property>
                 </widget>
                </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_mgm_ingenieria">
+                 <property name="text">
+                  <string> Archivados </string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
              <widget class="QWidget" name="laboratorio_tab">
@@ -2804,7 +2888,18 @@ color: grey;
                <string> Laboratorio </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_16">
-               <item row="1" column="0" colspan="4">
+               <item row="0" column="4">
+                <widget class="QPushButton" name="boton_refrescar_mgm_laboratorio">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="5">
                 <widget class="QTableWidget" name="tabla_eventos_mgm_laboratorio">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
@@ -2913,18 +3008,17 @@ color: grey;
                  </item>
                 </widget>
                </item>
-               <item row="0" column="3">
-                <widget class="QPushButton" name="boton_refrescar_mgm_laboratorio">
-                 <property name="text">
-                  <string/>
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="line_buscar_tabla_mgm_laboratorio">
+                 <property name="styleSheet">
+                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
+                 <property name="placeholderText">
+                  <string>Buscar . . .</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
+               <item row="0" column="2">
                 <widget class="QPushButton" name="boton_agregar_mgm_laboratorio">
                  <property name="minimumSize">
                   <size>
@@ -2940,17 +3034,7 @@ color: grey;
                  </property>
                 </widget>
                </item>
-               <item row="0" column="0">
-                <widget class="QLineEdit" name="line_buscar_tabla_mgm_laboratorio">
-                 <property name="styleSheet">
-                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Buscar . . .</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="2">
+               <item row="0" column="3">
                 <widget class="QPushButton" name="boton_eliminar_mgm_laboratorio">
                  <property name="enabled">
                   <bool>false</bool>
@@ -2966,6 +3050,13 @@ color: grey;
                  </property>
                 </widget>
                </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_mgm_laboratorio">
+                 <property name="text">
+                  <string> Archivados </string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
              <widget class="QWidget" name="producto_tab">
@@ -2973,44 +3064,7 @@ color: grey;
                <string> Producto </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_17">
-               <item row="0" column="0">
-                <widget class="QLineEdit" name="line_buscar_tabla_mgm_producto">
-                 <property name="styleSheet">
-                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Buscar . . .</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QPushButton" name="boton_agregar_mgm_producto">
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>+</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="3">
-                <widget class="QPushButton" name="boton_refrescar_mgm_producto">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0" colspan="4">
+               <item row="1" column="0" colspan="5">
                 <widget class="QTableWidget" name="tabla_eventos_mgm_producto">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
@@ -3119,7 +3173,7 @@ color: grey;
                  </item>
                 </widget>
                </item>
-               <item row="0" column="2">
+               <item row="0" column="3">
                 <widget class="QPushButton" name="boton_eliminar_mgm_producto">
                  <property name="enabled">
                   <bool>false</bool>
@@ -3132,6 +3186,50 @@ color: grey;
                  </property>
                  <property name="text">
                   <string>-</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="line_buscar_tabla_mgm_producto">
+                 <property name="styleSheet">
+                  <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Buscar . . .</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="boton_agregar_mgm_producto">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QPushButton" name="boton_refrescar_mgm_producto">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>../etc/logo_refrescar.png</normaloff>../etc/logo_refrescar.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="boton_archivo_mgm_producto">
+                 <property name="text">
+                  <string> Archivados </string>
                  </property>
                 </widget>
                </item>
