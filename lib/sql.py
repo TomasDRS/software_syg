@@ -53,12 +53,12 @@ class SQLite:
             cursor.execute(query, (fecha_carga, empresa, descripcion, encargado, fecha_evento))
             return cursor.fetchall()
 
-    def modificar_evento_user(self, tabla, fecha_carga, empresa, descripcion_vieja, descripcion_nueva, actualizaciones, fecha_vieja, fecha_nueva, encargado, estado_nuevo):
+    def modificar_evento_user(self, tabla, fecha_carga, empresa, descripcion_vieja, descripcion_nueva, fecha_mod, actualizaciones, fecha_vieja, fecha_nueva, encargado, estado_nuevo):
         """Modifica un evento en la tabla especificada."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            query = f"UPDATE {tabla} SET descripcion = ?, fecha_evento = ?, estado = ?, actualizaciones = ? WHERE fecha_carga = ? AND empresa = ? AND descripcion = ? AND encargado = ? AND fecha_evento = ?;"
-            cursor.execute(query, (descripcion_nueva, fecha_nueva, estado_nuevo, actualizaciones, fecha_carga, empresa, descripcion_vieja, encargado, fecha_vieja))
+            query = f"UPDATE {tabla} SET descripcion = ?, fecha_evento = ?, fecha_mod = ?, estado = ?, actualizaciones = ? WHERE fecha_carga = ? AND empresa = ? AND descripcion = ? AND encargado = ? AND fecha_evento = ?;"
+            cursor.execute(query, (descripcion_nueva, fecha_nueva, fecha_mod, estado_nuevo, actualizaciones, fecha_carga, empresa, descripcion_vieja, encargado, fecha_vieja))
 
     def modificar_evento_admin(self, tabla, fecha_carga, empresa_vieja, empresa_nueva, descripcion_vieja, descripcion_nueva, actualizaciones, fecha_anterior, fecha_nueva, encargados_viejos, encargados_nuevos, estado_viejo, estado_nuevo):
         """Modifica un evento en la tabla especificada."""
@@ -106,3 +106,18 @@ class SQLite:
             query = f"INSERT INTO {tabla} (nombre, cuit, direccion, contacto, email, telefono) VALUES (?, ?, ?, ?, ?, ?);"
             cursor.execute(query, (nombre, cuit, direccion, contacto, email, telefono))
 
+    def buscar_registros_por_fecha_creacion(self, tabla, fecha):
+        """Cuenta cuántos registros tienen la fecha actual en la columna especificada."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            query = f"""SELECT * FROM {tabla} WHERE fecha_carga LIKE ?"""
+            cursor.execute(query, (fecha,))  # Nota la coma: esto es una tupla de un solo elemento
+            return cursor.fetchall()
+        
+    def buscar_registros_por_fecha_modificacion(self, tabla, fecha):
+        """Cuenta cuántos registros tienen la fecha actual en la columna especificada."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            query = f"""SELECT * FROM {tabla} WHERE fecha_mod LIKE ?"""
+            cursor.execute(query, (fecha,))  # Nota la coma: esto es una tupla de un solo elemento
+            return cursor.fetchall()

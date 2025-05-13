@@ -176,7 +176,7 @@ class EDIT_EVENT(QMainWindow):
         descripcion_empresa_nueva = self.line_descripcion_empresa.toPlainText()
 
         data = [str(self.evento[4]), str(self.evento[1]), str(self.line_descripcion.toPlainText()), 
-            str(descripcion_nueva), str(descripcion_empresa_nueva),str(self.evento[9]),
+            str(descripcion_nueva), str(fecha_actualizacion), str(descripcion_empresa_nueva), str(self.evento[9]),
             str(fecha_nueva), str(self.evento[10]), str(estado_nuevo)]
         
         self.claseSQLite.modificar_evento_user(self.tabla_seleccionada, *data)

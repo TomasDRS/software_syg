@@ -582,8 +582,8 @@ QToolBox::tab:selected {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
      <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -1865,120 +1865,423 @@ QToolBox::tab:selected {
              </widget>
              <widget class="QWidget" name="widget">
               <attribute name="title">
-               <string> Calendario de eventos </string>
+               <string> Estadísticas </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_2">
-               <item row="1" column="2">
-                <widget class="QPushButton" name="boton_nuevo">
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>Nuevo</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="3">
-                <widget class="QPushButton" name="boton_borrar">
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>Borrar</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2" colspan="2">
-                <widget class="QListWidget" name="lista_eventos">
-                 <property name="minimumSize">
-                  <size>
-                   <width>350</width>
-                   <height>300</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border-style: solid;
-border-width: 1px;
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               <item row="0" column="0">
+                <widget class="QFrame" name="frame_2">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
                  </property>
                  <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
+                  <enum>QFrame::Raised</enum>
                  </property>
-                </widget>
-               </item>
-               <item row="0" column="2">
-                <widget class="QLabel" name="label">
-                 <property name="styleSheet">
-                  <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>Fecha seleccionada:</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" rowspan="4">
-                <widget class="QCalendarWidget" name="calendarWidget">
-                 <property name="minimumSize">
-                  <size>
-                   <width>300</width>
-                   <height>300</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QCalendarWidget QWidget 
-{
-	font: 75 23pt &quot;MS Shell Dlg 2&quot;;
-	background-color: rgb(194, 194, 194);
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(194, 194, 194, 255), stop:1 rgba(235, 235, 235, 255));
-	color: rgb(0, 0, 0);
-}
-QCalendarWidget QTableView
-{
-	font: 87 18pt &quot;Arial&quot;;
-	border-style: solid;
-	border-width: 1px;
-    background-color:lightgrey;	
-	selection-background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(152, 152, 152, 255), stop:1 rgba(200, 200, 200, 255));
-}
-QCalendarWidget QAbstractItemView:disabled 
-{ 
-color: grey; 
-}</string>
-                 </property>
-                 <property name="firstDayOfWeek">
-                  <enum>Qt::Sunday</enum>
-                 </property>
-                 <property name="gridVisible">
-                  <bool>true</bool>
-                 </property>
-                 <property name="selectionMode">
-                  <enum>QCalendarWidget::SingleSelection</enum>
-                 </property>
-                 <property name="horizontalHeaderFormat">
-                  <enum>QCalendarWidget::ShortDayNames</enum>
-                 </property>
-                 <property name="verticalHeaderFormat">
-                  <enum>QCalendarWidget::NoVerticalHeader</enum>
-                 </property>
-                 <property name="navigationBarVisible">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="3">
-                <widget class="QLabel" name="label_fecha_seleccionada">
-                 <property name="styleSheet">
-                  <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
+                 <layout class="QGridLayout" name="gridLayout_24">
+                  <item row="0" column="2">
+                   <widget class="QLabel" name="label_19">
+                    <property name="layoutDirection">
+                     <enum>Qt::LeftToRight</enum>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">font: 15pt &quot;MS Shell Dlg 2&quot;;</string>
+                    </property>
+                    <property name="text">
+                     <string>Tabla seleccionada:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_6">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_29">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_3">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid grey;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos editados hoy:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_syg_eventos_editados_hoy">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid grey;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="7" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_7">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_30">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_4">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid grey;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos editados esta semana:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_syg_eventos_editados_semana">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid grey;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="3">
+                   <widget class="QComboBox" name="combo_syg_tabla_estadisticas">
+                    <property name="styleSheet">
+                     <string notr="true">font: 15pt &quot;MS Shell Dlg 2&quot;;</string>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>Todas</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Comex</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Gestión</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Ingeniería</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Laboratorio</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Visitas Ingeniería</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Calibraciones Ingeniería</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Producto</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="5" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_5">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_28">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_5">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid grey;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos cargados este mes:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_syg_eventos_cargados_mes">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid grey;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="2" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_17">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_40">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_15">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos terminados:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_syg_eventos_terminados">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="1" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_16">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_39">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_13">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos totales:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_syg_eventos_totales">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="4" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_4">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_26">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_2">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos cargados esta semana:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_syg_eventos_cargados_semana">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_3">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_25">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos cargados hoy:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_syg_eventos_cargados_hoy">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="8" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_8">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_31">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_6">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid grey;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos editados este mes:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_syg_eventos_editados_mes">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid grey;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" colspan="2">
+                   <widget class="QLabel" name="label_14">
+                    <property name="styleSheet">
+                     <string notr="true">font: 30pt &quot;MS Shell Dlg 2&quot;;</string>
+                    </property>
+                    <property name="text">
+                     <string>SYG</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
               </layout>
@@ -3237,120 +3540,424 @@ color: grey;
              </widget>
              <widget class="QWidget" name="widget_3">
               <attribute name="title">
-               <string> Calendario de eventos </string>
+               <string> Estadísticas </string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_6">
-               <item row="1" column="2">
-                <widget class="QPushButton" name="boton_nuevo_2">
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>Nuevo</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="3">
-                <widget class="QPushButton" name="boton_borrar_2">
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>Borrar</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2" colspan="2">
-                <widget class="QListWidget" name="lista_eventos_2">
-                 <property name="minimumSize">
-                  <size>
-                   <width>350</width>
-                   <height>300</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border-style: solid;
-border-width: 1px;
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               <item row="0" column="0">
+                <widget class="QFrame" name="frame_9">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
                  </property>
                  <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
+                  <enum>QFrame::Raised</enum>
                  </property>
-                </widget>
-               </item>
-               <item row="0" column="2">
-                <widget class="QLabel" name="label_2">
-                 <property name="styleSheet">
-                  <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>Fecha seleccionada:</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" rowspan="4">
-                <widget class="QCalendarWidget" name="calendarWidget_2">
-                 <property name="minimumSize">
-                  <size>
-                   <width>300</width>
-                   <height>300</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QCalendarWidget QWidget 
-{
-	font: 75 23pt &quot;MS Shell Dlg 2&quot;;
-	background-color: rgb(194, 194, 194);
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(194, 194, 194, 255), stop:1 rgba(235, 235, 235, 255));
-	color: rgb(0, 0, 0);
-}
-QCalendarWidget QTableView
-{
-	font: 87 18pt &quot;Arial&quot;;
-	border-style: solid;
-	border-width: 1px;
-    background-color:lightgrey;	
-	selection-background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(152, 152, 152, 255), stop:1 rgba(200, 200, 200, 255));
-}
-QCalendarWidget QAbstractItemView:disabled 
-{ 
-color: grey; 
-}</string>
-                 </property>
-                 <property name="firstDayOfWeek">
-                  <enum>Qt::Sunday</enum>
-                 </property>
-                 <property name="gridVisible">
-                  <bool>true</bool>
-                 </property>
-                 <property name="selectionMode">
-                  <enum>QCalendarWidget::SingleSelection</enum>
-                 </property>
-                 <property name="horizontalHeaderFormat">
-                  <enum>QCalendarWidget::ShortDayNames</enum>
-                 </property>
-                 <property name="verticalHeaderFormat">
-                  <enum>QCalendarWidget::NoVerticalHeader</enum>
-                 </property>
-                 <property name="navigationBarVisible">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="3">
-                <widget class="QLabel" name="label_fecha_seleccionada_2">
-                 <property name="styleSheet">
-                  <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
+                 <layout class="QGridLayout" name="gridLayout_32">
+                  <item row="6" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_15">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_38">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_12">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos editados hoy:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_mgm_eventos_editados_hoy">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="7" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_11">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_34">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_8">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos editados esta semana:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_mgm_eventos_editados_semana">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="5" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_10">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_33">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_7">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos cargados este mes:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_mgm_eventos_cargados_mes">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="3">
+                   <widget class="QComboBox" name="combo_mgm_tabla_estadisticas">
+                    <property name="styleSheet">
+                     <string notr="true">font: 15pt &quot;MS Shell Dlg 2&quot;;</string>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>Todas</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Academia</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Calidad</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Comercial</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Gestión</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Ingeniería</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Laboratorio</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Producto</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="1" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_18">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_41">
+                     <item row="1" column="1">
+                      <widget class="QLabel" name="label_mgm_eventos_totales">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_16">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos totales:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="8" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_12">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_35">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_9">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos editados este mes:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_mgm_eventos_editados_mes">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="0" colspan="2">
+                   <widget class="QLabel" name="label_18">
+                    <property name="styleSheet">
+                     <string notr="true">font: 30pt &quot;MS Shell Dlg 2&quot;;</string>
+                    </property>
+                    <property name="text">
+                     <string>MGM</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_13">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_36">
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_mgm_eventos_cargados_semana">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_10">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos cargados esta semana:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="2" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_19">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_42">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_17">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;
+</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos terminados:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_mgm_eventos_terminados">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="4">
+                   <widget class="QFrame" name="frame_14">
+                    <property name="styleSheet">
+                     <string notr="true">border:1px solid grey;
+border-radius:2px;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_37">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_11">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>Eventos cargados hoy:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLabel" name="label_mgm_eventos_cargados_hoy">
+                       <property name="styleSheet">
+                        <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
+border:0px solid;</string>
+                       </property>
+                       <property name="text">
+                        <string>0</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="QLabel" name="label_20">
+                    <property name="layoutDirection">
+                     <enum>Qt::LeftToRight</enum>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">font: 15pt &quot;MS Shell Dlg 2&quot;;</string>
+                    </property>
+                    <property name="text">
+                     <string>Tabla seleccionada:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
               </layout>

@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QCalendarWidget, QMessageBox, QHeaderView
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QHeaderView
 from PyQt5.QtGui import QPainter, QColor, QFont
 from PyQt5.QtCore import QDate, QPoint, Qt, QTimer
 from PyQt5 import QtWidgets
@@ -9,7 +9,7 @@ from lib.agregar_evento import ADD_EVENT
 from lib.editar_evento import EDIT_EVENT
 from lib.agregar_empresa import ADD_COMPANY
 from lib.eventos_archivados import ARCHIVE
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import ast
 
 class UI(QMainWindow):
@@ -29,7 +29,7 @@ class UI(QMainWindow):
         self.msg_login.exec_()
 
         # VERSION DEL PROGRAMA
-        self.action_version.setText("Versión 1.1.7 test build")
+        self.action_version.setText("Versión 1.2.0 test build")
 
         botones_agregar = [self.boton_agregar_syg_comex, self.boton_agregar_syg_gestion, self.boton_agregar_syg_ingenieria,
                             self.boton_agregar_syg_laboratorio, self.boton_agregar_syg_visitas_ingenieria, self.boton_agregar_syg_calibraciones_ingenieria,
@@ -74,8 +74,6 @@ class UI(QMainWindow):
             boton.clicked.connect(lambda _, b=boton: self.mostrar_tabla_archivo(b))
 
         self.refrescar_tabla()
-        self.calendarWidget.clicked.connect(self.mostrar_eventos_lista)
-        self.calendarWidget.clicked.connect(lambda: self.mostrar_eventos_calendario(self.tabla_user))
 
         tablas_eventos = [self.tabla_eventos_syg_comex, self.tabla_eventos_syg_gestion, self.tabla_eventos_syg_ingenieria,
                         self.tabla_eventos_syg_laboratorio, self.tabla_visitas_syg_ingenieria, self.tabla_calibraciones_syg_ingenieria,
@@ -86,9 +84,14 @@ class UI(QMainWindow):
         for tabla in tablas_eventos:
             tabla.doubleClicked.connect(lambda _, t=tabla: self.llamar_editar_evento(t))
 
+        self.combo_syg_tabla_estadisticas.currentIndexChanged.connect(self.actualizar_estadisticas_syg)
+        self.combo_mgm_tabla_estadisticas.currentIndexChanged.connect(self.actualizar_estadisticas_mgm)
+
         self.desbloquear_tabs()
 
         if self.user == "German Roldan" or self.user == "Matias Roldan":
+            self.actualizar_estadisticas_syg()
+            self.actualizar_estadisticas_mgm()
             self.desbloquear_admin()
             self.mostrar_eventos_tabla_admin("todo", self.tabla_eventos_todo_admin)
             self.mostrar_eventos_tabla_admin("syg", self.tabla_eventos_syg_admin)
@@ -130,62 +133,6 @@ class UI(QMainWindow):
                     self.tabWidget_3.setTabEnabled(tab_3_or_tab_index, True)
                 else:
                     self.tabWidget.setTabEnabled(tab_3_or_tab_index, True)
-
-    def mostrar_eventos_calendario(self, tabla):
-        self.eventos_formateados = {}
-        self.eventos = self.claseSQLite.leer_eventos(tabla) 
-        # Personalizar el calendarWidget ya existente
-        for evento in self.eventos:
-            fecha = QDate(*list(map(int, evento[7].split("/"))))
-            titulo = evento[1]
-            descripcion = evento[2]
-            prioridad = evento[10]
-            estado = evento[11]
-            # Si ya tiene un evento, agregar otro
-            if fecha in self.eventos_formateados:
-                self.eventos_formateados[fecha].append([titulo, prioridad, estado])
-            else:
-                # O si quieres agregar un nuevo evento a una fecha que no está en el diccionario, simplemente lo asignas
-                self.eventos_formateados[fecha] = [[titulo, prioridad, estado]]
-
-        self.calendarWidget.paintCell = self.paintCell  # Sobrescribir el método paintCell
-        # Refrescar el calendario para aplicar cambios
-        self.calendarWidget.updateCells()
-
-    def paintCell(self, painter, rect, date):
-        """Dibuja círculos en los días con eventos."""
-        # Llamar al método original de QCalendarWidget para pintar la celda
-        QCalendarWidget.paintCell(self.calendarWidget, painter, rect, date)
-
-        if date in self.eventos_formateados:
-            prioridades = [0] * 5
-            nro_eventos = 0
-            for evento in self.eventos_formateados[date]:
-                if 1 <= int(evento[1]) <= 5:
-                    prioridades[int(evento[1]) - 1] += 1
-            colors = [Qt.red, QColor(255, 120, 0),  Qt.yellow, Qt.blue, Qt.green]
-            positions = [11, 27, 43, 59, 75]
-            for i in range(5):
-                if prioridades[i] > 0:
-                    painter.setPen(Qt.black)
-                    painter.setBrush(QColor(colors[i]))
-                    painter.drawEllipse(rect.topLeft() + QPoint(positions[nro_eventos], 11), 9, 9)
-                    if colors[i] == Qt.blue:
-                        painter.setPen(Qt.white)
-                    painter.setFont(QFont("Arial", 10, QFont.Bold))
-                    painter.drawText(rect.topLeft() + QPoint(positions[nro_eventos] - 3, 16), str(prioridades[i]))
-                    nro_eventos += 1
-
-    def mostrar_eventos_lista(self, date):
-        """Muestra los eventos del día seleccionado."""
-        fecha_seleccionada = self.calendarWidget.selectedDate().toString("yyyy/MM/dd")
-        self.label_fecha_seleccionada.setText(fecha_seleccionada)
-        self.lista_eventos.clear()
-        for event in self.claseSQLite.buscar_evento(self.tabla_user, fecha_seleccionada):
-            self.lista_eventos.addItem(f"{event[1]} - {event[2]}")
-        self.calendarWidget.paintCell = self.paintCell  # Sobrescribir el método paintCell
-        # Refrescar el calendario para aplicar cambios
-        self.calendarWidget.updateCells()
 
     def refrescar_tabla(self):
         sectores = ast.literal_eval(self.claseSQLite.buscar_usuario(self.user)[4])
@@ -371,71 +318,66 @@ class UI(QMainWindow):
 
                     # Desempaquetamos las listas internas
                     finalizado_interno_num, fecha_interno, encargado_interno = lista_finalizado[0]
-                    if finalizado_interno_num == "0":
-                        finalizado_num, fecha, encargado = lista_finalizado[1]
+                    # if finalizado_interno_num == "0":
+                    finalizado_num, fecha, encargado = lista_finalizado[1]
 
-                        # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
-                        finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno}\n{encargado_interno}"
-                        finalizado = f"{finalizado_num}\n{fecha}\n{encargado}"
+                    # Formateamos los strings con "\n". Usamos f-strings para mayor claridad
+                    finalizado_interno = f"{finalizado_interno_num}\n{fecha_interno}\n{encargado_interno}"
+                    finalizado = f"{finalizado_num}\n{fecha}\n{encargado}"
 
-                        lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
-                        encargados_formateado = "\n".join(lista_encargados)
+                    lista_encargados = ast.literal_eval(row[10]) # ejemplo lista_encargados = ["Tomás Draese", "Nicolas Errigo", "Facundo Astrada"]
+                    encargados_formateado = "\n".join(lista_encargados)
 
-                        lista_fechas_limite = ast.literal_eval(row[9])
-                        ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
-                        # Formatear el string con salto de línea
-                        fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
+                    lista_fechas_limite = ast.literal_eval(row[9])
+                    ultima_fecha, ultimo_nombre = lista_fechas_limite[-1]
+                    # Formatear el string con salto de línea
+                    fecha_limite_formateada = f"""{ultima_fecha}\n{ultimo_nombre}"""
 
-                        fmt = "%Y/%m/%d"  # Formato de la fecha
-                        hoy = datetime.today().date()
-                        fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
+                    fmt = "%Y/%m/%d"  # Formato de la fecha
+                    hoy = datetime.today().date()
+                    fecha_obj = datetime.strptime(ultima_fecha, fmt).date()  # Convertimos directamente a date
 
-                        for colindex, value in enumerate([tabla_info[1], row[0], row[4], row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
-                            try:                            
-                                item = QtWidgets.QTableWidgetItem(str(value))  # Crear el item
-                                tabla_widget.setItem(tableindex, colindex, item)  # Asignarlo a la tabla
-                                
-                                if item is not None:  # Verificar que el item no es None
-                                    item.setTextAlignment(Qt.AlignCenter)
-                                else:
-                                    print(f"[WARNING] No se pudo agregar el item en ({tableindex}, {colindex})")
+                    for colindex, value in enumerate([tabla_info[1], row[0], row[4], row[1], row[7], row[2], encargados_formateado, fecha_limite_formateada, finalizado_interno, finalizado]):
+                        try:                            
+                            item = QtWidgets.QTableWidgetItem(str(value))  # Crear el item
+                            tabla_widget.setItem(tableindex, colindex, item)  # Asignarlo a la tabla
                             
-                            except Exception as e:
-                                print("[ERROR] Error al agregar item o no existen items: ", e)
-                                
-                        num_saltos = row[2].count("\n")
-                        tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
-
-                        colors = {"0": QColor(255, 0, 0, 100),
-                                "1": QColor(0, 255, 0, 100),}
+                            if item is not None:  # Verificar que el item no es None
+                                item.setTextAlignment(Qt.AlignCenter)
+                            else:
+                                print(f"[WARNING] No se pudo agregar el item en ({tableindex}, {colindex})")
                         
-                        # Calcular la diferencia en días
-                        diferencia = (fecha_obj - hoy).days
-                        if diferencia <= 7:
-                            tabla_widget.item(tableindex, 7).setBackground(QColor(255, 0, 0, 100))
-                        elif 7 < diferencia <= 14:
-                            tabla_widget.item(tableindex, 7).setBackground(QColor(255, 120, 0, 100))
-                        elif 14 < diferencia <= 21:
-                            tabla_widget.item(tableindex, 7).setBackground(QColor(255, 255, 0, 100))
-                        elif diferencia > 21:
-                            tabla_widget.item(tableindex, 7).setBackground(QColor(0, 255, 0, 100))
-
-                        if finalizado_interno_num in colors:
-                            tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_interno_num])
-                        if finalizado_num in colors:
-                            tabla_widget.item(tableindex, 9).setBackground(colors[finalizado_num])
+                        except Exception as e:
+                            print("[ERROR] Error al agregar item o no existen items: ", e)
                             
-                        tableindex += 1
-                    else:    
-                        menos += 1
-                        tabla_widget.setRowCount(len(self.eventos) - menos)
+                    num_saltos = row[2].count("\n")
+                    tabla_widget.setRowHeight(tableindex, 30 + 25*num_saltos)
+
+                    colors = {"0": QColor(255, 0, 0, 100),
+                            "1": QColor(0, 255, 0, 100),}
+                    
+                    # Calcular la diferencia en días
+                    diferencia = (fecha_obj - hoy).days
+                    if diferencia <= 7:
+                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 0, 0, 100))
+                    elif 7 < diferencia <= 14:
+                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 120, 0, 100))
+                    elif 14 < diferencia <= 21:
+                        tabla_widget.item(tableindex, 7).setBackground(QColor(255, 255, 0, 100))
+                    elif diferencia > 21:
+                        tabla_widget.item(tableindex, 7).setBackground(QColor(0, 255, 0, 100))
+
+                    if finalizado_interno_num in colors:
+                        tabla_widget.item(tableindex, 8).setBackground(colors[finalizado_interno_num])
+                    if finalizado_num in colors:
+                        tabla_widget.item(tableindex, 9).setBackground(colors[finalizado_num])
+                        
+                    tableindex += 1
 
             # Diccionario con los índices de columna y sus modos de ajuste
-            resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive,
-                        2: QHeaderView.ResizeMode.Interactive, 3: QHeaderView.ResizeMode.Interactive,
-                        4: QHeaderView.ResizeMode.Stretch, 5: QHeaderView.ResizeMode.Interactive,            
-                        6: QHeaderView.ResizeMode.Interactive, 7: QHeaderView.ResizeMode.Fixed, 
-                        8: QHeaderView.ResizeMode.Fixed}
+            resize_modes = {0: QHeaderView.ResizeMode.Interactive, 1: QHeaderView.ResizeMode.Interactive, 2: QHeaderView.ResizeMode.Interactive, 
+                            3: QHeaderView.ResizeMode.Interactive, 4: QHeaderView.ResizeMode.Stretch, 5: QHeaderView.ResizeMode.Interactive,            
+                        6: QHeaderView.ResizeMode.Interactive, 7: QHeaderView.ResizeMode.Fixed, 8: QHeaderView.ResizeMode.Fixed}
             # Aplicar los modos en un bucle
             for col, mode in resize_modes.items():
                 tabla_widget.horizontalHeader().setSectionResizeMode(col, mode)
@@ -548,11 +490,10 @@ class UI(QMainWindow):
                             self.boton_archivo_mgm_laboratorio: ["events_mgm_laboratorio", self.tabla_eventos_mgm_laboratorio], 
                             self.boton_archivo_mgm_producto: ["events_mgm_producto", self.tabla_eventos_mgm_producto]}
         
-        self.ventana_archivo = ARCHIVE(sector_table_map[boton][0])
+        self.ventana_archivo = ARCHIVE(self.user, sector_table_map[boton][0])
         self.ventana_archivo.show()
 
     def llamar_editar_evento(self, tabla_seleccionada):
-
         """Abre la ventana de edición de eventos."""
         sector_table_map = {self.tabla_eventos_syg_comex: "events_syg_comex", self.tabla_eventos_syg_gestion: "events_syg_gestion", 
                     self.tabla_eventos_syg_ingenieria: "events_syg_ingenieria", self.tabla_eventos_syg_laboratorio: "events_syg_laboratorio",
@@ -593,3 +534,125 @@ class UI(QMainWindow):
         else:
             eventos_filtrados = self.claseSQLite.buscar_evento_por_keyword(sector_table_map[line_buscar][0], line_buscar.text())
             self.mostrar_eventos_especificos(sector_table_map[line_buscar][1], eventos_filtrados)
+
+    def actualizar_estadisticas_syg(self):
+        fecha_hoy = datetime.today().date()
+        fecha_hoy_str = fecha_hoy.strftime("%Y/%m/%d")
+        fechas_semana = [fecha_hoy - timedelta(days=i) for i in range(7)]
+        fecha_semana_str = [fecha.strftime("%Y/%m/%d") for fecha in fechas_semana]
+        fechas_mes = [fecha_hoy - timedelta(days=i) for i in range(30)]
+        fecha_mes_str = [fecha.strftime("%Y/%m/%d") for fecha in fechas_mes]
+
+        tablas_eventos_syg = ["events_syg_comex", "events_syg_gestion", "events_syg_ingenieria", "events_syg_laboratorio", 
+                              "visitas_syg_ingenieria", "calibraciones_syg_ingenieria", "events_syg_producto"]
+
+        eventos_syg_hoy = eventos_syg_semana = eventos_syg_mes = eventos_syg_total = eventos_syg_terminados = eventos_syg_editados_hoy = eventos_syg_editados_semana = eventos_syg_editados_mes = 0
+
+        if self.combo_syg_tabla_estadisticas.currentIndex() == 0:
+            for tabla in tablas_eventos_syg:
+                eventos_syg_hoy = eventos_syg_hoy + len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha_hoy_str))
+                eventos_syg_editados_hoy = eventos_syg_editados_hoy + len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha_hoy_str))
+                for fecha in fecha_semana_str:
+                    eventos_syg_semana = eventos_syg_semana + len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha))
+                    eventos_syg_editados_semana = eventos_syg_editados_semana + len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha))
+                for fecha in fecha_mes_str:
+                    eventos_syg_mes = eventos_syg_mes + len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha))
+                    eventos_syg_editados_mes = eventos_syg_editados_mes + len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha))
+                total_eventos = self.claseSQLite.leer_eventos(tabla)
+                eventos_syg_total = eventos_syg_total + len(total_eventos)
+                finalizados = [ast.literal_eval(evento[11]) for evento in total_eventos]
+
+                for lista_finalizado in finalizados:
+                    for finalizado in lista_finalizado:
+                        if finalizado[0] == "1":
+                            eventos_syg_terminados += 1
+        else:
+            tabla = tablas_eventos_syg[self.combo_syg_tabla_estadisticas.currentIndex() - 1]
+            eventos_syg_hoy = eventos_syg_hoy + len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha_hoy_str))
+            eventos_syg_editados_hoy = eventos_syg_editados_hoy + len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha_hoy_str))
+            for fecha in fecha_semana_str:
+                eventos_syg_semana = eventos_syg_semana + len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha))
+                eventos_syg_editados_semana = eventos_syg_editados_semana + len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha))
+            for fecha in fecha_mes_str:
+                eventos_syg_mes = eventos_syg_mes + len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha))
+                eventos_syg_editados_mes = eventos_syg_editados_mes + len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha))
+            total_eventos = self.claseSQLite.leer_eventos(tabla)
+            eventos_syg_total = eventos_syg_total + len(total_eventos)
+            finalizados = [ast.literal_eval(evento[11]) for evento in total_eventos]
+
+            for lista_finalizado in finalizados:
+                for finalizado in lista_finalizado:
+                    if finalizado[0] == "1":
+                        eventos_syg_terminados += 1
+
+        # Suponiendo que tienes estos labels definidos para syg en tu GUI
+        self.label_syg_eventos_cargados_hoy.setText(str(eventos_syg_hoy))
+        self.label_syg_eventos_cargados_semana.setText(str(eventos_syg_semana))
+        self.label_syg_eventos_cargados_mes.setText(str(eventos_syg_mes))
+        self.label_syg_eventos_totales.setText(str(eventos_syg_total))
+        self.label_syg_eventos_terminados.setText(str(eventos_syg_terminados))
+        self.label_syg_eventos_editados_hoy.setText(str(eventos_syg_editados_hoy))
+        self.label_syg_eventos_editados_semana.setText(str(eventos_syg_editados_semana))
+        self.label_syg_eventos_editados_mes.setText(str(eventos_syg_editados_mes))
+
+    def actualizar_estadisticas_mgm(self):
+        fecha_hoy = datetime.today().date()
+        fecha_hoy_str = fecha_hoy.strftime("%Y/%m/%d")
+        fechas_semana = [fecha_hoy - timedelta(days=i) for i in range(7)]
+        fecha_semana_str = [fecha.strftime("%Y/%m/%d") for fecha in fechas_semana]
+        fechas_mes = [fecha_hoy - timedelta(days=i) for i in range(30)]
+        fecha_mes_str = [fecha.strftime("%Y/%m/%d") for fecha in fechas_mes]
+
+        tablas_eventos_mgm = ["events_mgm_academia", "events_mgm_calidad", "events_mgm_comercial", "events_mgm_gestion",
+                            "events_mgm_ingenieria", "events_mgm_laboratorio", "events_mgm_producto"]
+
+        eventos_mgm_hoy = eventos_mgm_semana = eventos_mgm_mes = eventos_mgm_total = eventos_mgm_terminados = eventos_mgm_editados_hoy = eventos_mgm_editados_semana = eventos_mgm_editados_mes = 0
+
+        if self.combo_mgm_tabla_estadisticas.currentIndex() == 0:
+            for tabla in tablas_eventos_mgm:
+                eventos_mgm_hoy += len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha_hoy_str))
+                eventos_mgm_editados_hoy += len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha_hoy_str))
+                for fecha in fecha_semana_str:
+                    eventos_mgm_semana += len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha))
+                    eventos_mgm_editados_semana += len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha))
+                for fecha in fecha_mes_str:
+                    eventos_mgm_mes += len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha))
+                    eventos_mgm_editados_mes += len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha))
+
+                total_eventos = self.claseSQLite.leer_eventos(tabla)
+                eventos_mgm_total += len(total_eventos)
+
+                finalizados = [ast.literal_eval(evento[11]) for evento in total_eventos]
+                for lista_finalizado in finalizados:
+                    for finalizado in lista_finalizado:
+                        if finalizado[0] == "1":
+                            eventos_mgm_terminados += 1
+        else:
+            tabla = tablas_eventos_mgm[self.combo_mgm_tabla_estadisticas.currentIndex() - 1]
+            eventos_mgm_hoy += len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha_hoy_str))
+            eventos_mgm_editados_hoy += len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha_hoy_str))
+            for fecha in fecha_semana_str:
+                eventos_mgm_semana += len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha))
+                eventos_mgm_editados_semana += len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha))
+            for fecha in fecha_mes_str:
+                eventos_mgm_mes += len(self.claseSQLite.buscar_registros_por_fecha_creacion(tabla, fecha))
+                eventos_mgm_editados_mes += len(self.claseSQLite.buscar_registros_por_fecha_modificacion(tabla, fecha))
+
+            total_eventos = self.claseSQLite.leer_eventos(tabla)
+            eventos_mgm_total += len(total_eventos)
+
+            finalizados = [ast.literal_eval(evento[11]) for evento in total_eventos]
+            for lista_finalizado in finalizados:
+                for finalizado in lista_finalizado:
+                    if finalizado[0] == "1":
+                        eventos_mgm_terminados += 1
+
+        # Suponiendo que tienes estos labels definidos para mgm en tu GUI
+        self.label_mgm_eventos_cargados_hoy.setText(str(eventos_mgm_hoy))
+        self.label_mgm_eventos_cargados_semana.setText(str(eventos_mgm_semana))
+        self.label_mgm_eventos_cargados_mes.setText(str(eventos_mgm_mes))
+        self.label_mgm_eventos_totales.setText(str(eventos_mgm_total))
+        self.label_mgm_eventos_terminados.setText(str(eventos_mgm_terminados))
+        self.label_mgm_eventos_editados_hoy.setText(str(eventos_mgm_editados_hoy))
+        self.label_mgm_eventos_editados_semana.setText(str(eventos_mgm_editados_semana))
+        self.label_mgm_eventos_editados_mes.setText(str(eventos_mgm_editados_mes))
